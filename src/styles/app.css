@@ -1,0 +1,22 @@
+html, body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  /* color: #000000; */
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  background-color: #002a69;
+  padding: 8px;
+}
+
+.nav-item a{
+  text-decoration: none;
+  display: block;
+  color: #e2e2e2;
+}
