@@ -33,6 +33,23 @@ export const Router = createBrowserRouter([
                 ],
             },
             {
+                path: "/requests",
+                children: [
+                    {
+                        index: true,
+                        // element: <Requets />
+                    },
+                    {
+                        path: ":idService",
+                        // element: <ServicesDetails />
+                    },
+                    {
+                        path: "addService",
+                        // element: <AddServices />
+                    }
+                ],
+            },
+            {
                 path: "/posts",
                 children: [
                     {
