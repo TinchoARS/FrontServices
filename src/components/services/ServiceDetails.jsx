@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
-// import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import useFetch from "../../hooks/fetchHook";
 import { SlArrowLeft } from "react-icons/sl";
 
 export const ServiceDetails = () => {
     const { idService } = useParams();
-    // const { token } = useAuth();
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM3MDU3ODM5LCJpYXQiOjE3MzcwNTYwMzksImp0aSI6IjVjOGVjMzUyMDU0NTQyYjA4YzUwNGUwOGMwYzRlZjk3IiwidXNlcl9pZCI6M30.BqfPPSCtZl78ROXTCgPOktlJWqzppllTeZlOSRitbuA'
+    const { token } = useAuth();
     const navigate = useNavigate();
     const [ {data, isLoading, errors}, doFetch ] = useFetch(`http://127.0.0.1:8000/api/services/${idService}`, {
         method: 'GET',
