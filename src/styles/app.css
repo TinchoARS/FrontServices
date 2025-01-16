@@ -6,8 +6,13 @@ html, body {
 }
 
 body {
-  display: flex;
-  flex-direction: column;
+  background-color: #B5DBFF;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: absolute;
+  justify-content: center;
+  align-items: center;
 }
 
 .navbar {

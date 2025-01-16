@@ -4,7 +4,7 @@ import "@fontsource/inter/700.css"; // Para el peso bold
 import '../../styles/navbar.css';
 
 export const NavBar = () => {
-    const anchoImagen = 40;
+    const anchoImagen = 240;
     // Datos de ejemplo del usuario (después podrás reemplazarlos con datos reales)
     const usuario = {
         nombre: "John Doe",
@@ -27,7 +27,7 @@ export const NavBar = () => {
                 {/* Logo */}
                 <div className="text-center mb-5">
                     <a className="navbar-brand" href="/">
-                        <img src="" alt="logo" width={anchoImagen}/>
+                        <img src="src\assets\logo.png" alt="logo" width={anchoImagen}/>
                     </a>
                 </div>
 
