@@ -3,13 +3,17 @@ import { Home } from "./components/Home";
 import { Layout } from "./Layout";
 import { NotFound } from "./components/NotFound";
 
+//LOGIN
+import Login from "./components/Auth/Login";
+//REGISTER
+
 export const Router = createBrowserRouter([
     {
         element: <Layout />,
         children: [
             {
                 path: "/login",
-                // element: <Login />
+                element: <Login />
             },
             {
                 path: "/",
