@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { Home } from "./components/Home";
 import { Layout } from "./Layout";
 import { NotFound } from "./components/NotFound";
+import { ServicesList } from "./components/services/ServicesList";
 
 export const Router = createBrowserRouter([
     {
@@ -20,7 +21,7 @@ export const Router = createBrowserRouter([
                 children: [
                     {
                         index: true,
-                        // element: <Services />
+                        element: <ServicesList />
                     },
                     {
                         path: ":idService",
