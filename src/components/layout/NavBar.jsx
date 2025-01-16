@@ -1,101 +1,107 @@
 import { NavLink } from "react-router-dom";
+import "@fontsource/inter";
+import "@fontsource/inter/700.css"; // Para el peso bold
+import '../../styles/navbar.css';
 
 export const NavBar = () => {
     const anchoImagen = 40;
+    // Datos de ejemplo del usuario (después podrás reemplazarlos con datos reales)
+    const usuario = {
+        nombre: "John Doe",
+        imagen: "https://via.placeholder.com/50"
+    };
 
-  return (
-    <>
-      <nav className="navbar navbar-expand-lg">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="/">
-            <img src="" alt="logo" width={anchoImagen}/>
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <div className="nav-link">
-                  <NavLink
-                    to="/"
-                    className={({ isActive, isPending, isTransitioning }) =>
-                    [
-                        isPending ? "pending" : "",
-                        isActive ? "text-white border-bottom border-white border-3" : "",
-                        isTransitioning ? "transitioning" : "",
-                    ].join(" ")
-                    }
-                  >
-                      Inicio
-                  </NavLink>
-              </div>
-              </li>
-              <li className="nav-item">
-                <div className="nav-link">
-                  <NavLink
-                    to="/services"
-                    className={({ isActive, isPending, isTransitioning }) =>
-                      [
-                          isPending ? "pending" : "",
-                          isActive ? "text-white border-bottom border-white border-3" : "",
-                          isTransitioning ? "transitioning" : "",
-                      ].join(" ")
-                    }
-                  >
-                    Services
-                  </NavLink>
+    return (
+        <nav style={{
+            height: '100vh',
+            width: '250px',
+            position: 'fixed',
+            left: 0,
+            top: 0,
+            backgroundColor: '#E0E8EE',
+            padding: '20px 15px',
+            fontFamily: 'Inter, sans-serif',
+
+        }}>
+            <div className="d-flex flex-column h-100">
+                {/* Logo */}
+                <div className="text-center mb-5">
+                    <a className="navbar-brand" href="/">
+                        <img src="" alt="logo" width={anchoImagen}/>
+                    </a>
                 </div>
-              </li>
-              <li className="nav-item">
-                <div className="nav-link">
-                  <NavLink
-                    to="/posts"
-                    className={({ isActive, isPending, isTransitioning }) =>
-                      [
-                          isPending ? "pending" : "",
-                          isActive ? "text-white border-bottom border-white border-3" : "",
-                          isTransitioning ? "transitioning" : "",
-                      ].join(" ")
-                    }
-                  >
-                    Posts
-                  </NavLink>
+
+                {/* Enlaces de navegación */}
+                <ul className="nav flex-column gap-2">
+                    <li className="nav-item">
+                        <NavLink
+                            to="/"
+                            className={({ isActive }) =>
+                                `nav-link bg-white rounded-3 px-4 py-3 ${isActive ? 'active fw-bold' : ''}`
+                            }
+                        >
+                            Home
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink
+                            to="/browse-services"
+                            className={({ isActive }) =>
+                                `nav-link bg-white rounded-3 px-4 py-3 ${isActive ? 'active fw-bold' : ''}`
+                            }
+                        >
+                            Browse Services
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink
+                            to="/my-services"
+                            className={({ isActive }) =>
+                                `nav-link bg-white rounded-3 px-4 py-3 ${isActive ? 'active fw-bold' : ''}`
+                            }
+                        >
+                            My Services
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink
+                            to="/my-requests"
+                            className={({ isActive }) =>
+                                `nav-link bg-white rounded-3 px-4 py-3 ${isActive ? 'active fw-bold' : ''}`
+                            }
+                        >
+                            My Requests
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink
+                            to="/saved"
+                            className={({ isActive }) =>
+                                `nav-link bg-white rounded-3 px-4 py-3 ${isActive ? 'active fw-bold' : ''}`
+                            }
+                        >
+                            Saved
+                        </NavLink>
+                    </li>
+                </ul>
+
+                {/* Perfil de usuario */}
+                <div className="mt-auto text-center">
+                    <div className="avatar-container mb-2">
+                        <img 
+                            src={usuario.imagen} 
+                            alt="Foto de perfil"
+                            className="rounded-circle"
+                            style={{
+                                width: '50px',
+                                height: '50px',
+                                objectFit: 'cover'
+                            }}
+                        />
+                    </div>
+                    <h6 className="mb-3">{usuario.nombre}</h6>
                 </div>
-              </li>
-              <li className="nav-item">
-                <div className="nav-link">
-                  <NavLink
-                    to="/profile"
-                    className={({ isActive, isPending, isTransitioning }) =>
-                      [
-                          isPending ? "pending" : "",
-                          isActive ? "text-white border-bottom border-white border-3" : "",
-                          isTransitioning ? "transitioning" : "",
-                      ].join(" ")
-                    }
-                  >
-                    Profile
-                  </NavLink>
-                </div>
-              </li>
-            </ul>
-            <form className="d-flex" role="search">
-              <button className="btn btn-outline-light" type="button">
-                Salir
-              </button>
-            </form>
-          </div>
-        </div>
-      </nav>
-    </>
-  );
+            </div>
+        </nav>
+    );
 };
