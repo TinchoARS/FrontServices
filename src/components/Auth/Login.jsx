@@ -56,7 +56,7 @@ function Login() {
     return (
         <div className="login-container">
             <form onSubmit={handleSubmit}>
-            <label for="exampleInputPassword1" class="form-label">Login</label>
+            <label for="exampleInputPassword1" className="form-label">Login</label>
                 <div className="mb-3">
                     <input type="text" class="form-control" id="username" name="username" placeholder="Usuario"  aria-describedby="emailHelp"
                         value={username}
@@ -68,12 +68,8 @@ function Login() {
                         value={password}
                         onChange={handleChange}/>
                 </div>
-                <div className="mb-3 form-check">
-                    <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
-                        <label className="form-check-label" for="exampleCheck1">Check me out</label>
-                </div>
 
-                <div className="Login">
+                <div>
                     <button type="submit" className="btn btn-primary">Sing Up</button>
                     {isLoading && triggerFetch && (<p>Cargando...</p>)}
                     {isError && <p>Error al cargar los datos.</p>}

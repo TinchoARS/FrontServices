@@ -10,16 +10,20 @@ import './styles/mainContent.css'
 
 export const Layout = () => {
   const location = useLocation();
-  const isLogin = location.pathname === "/login";
+  const path = location.pathname.toLowerCase();  // Normaliza la ruta
 
-  const mainClassName = isLogin ? 'login-container' : '';
+  //  Incluye coincidencias parciales como /login/reset
+  const isLogin = path.startsWith("/login");
+  const isRegister = path.startsWith("/register");
+
+  const mainClassName = isLogin || isRegister  ? 'login-container' : '';
 
   return (
     <AuthProvider>
       <div className={mainClassName}>
         <div className="row">
           <div className="col-12">
-          {!isLogin && <NavBar />}
+          {(!isLogin && !isRegister) && <NavBar />}
           </div>
         </div>
 
