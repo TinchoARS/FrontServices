@@ -5,7 +5,12 @@ import { NotFound } from "./components/NotFound";
 
 //LOGIN
 import Login from "./components/Auth/Login";
-//REGISTER
+//Register
+import Register from "./components/Auth/Register";
+//Create Service
+import AddServices from "./components/Create/ServiceCreate";
+
+
 
 export const Router = createBrowserRouter([
     {
@@ -32,7 +37,7 @@ export const Router = createBrowserRouter([
                     },
                     {
                         path: "addService",
-                        // element: <AddServices />
+                        element: <AddServices />
                     }
                 ],
             },
@@ -51,7 +56,7 @@ export const Router = createBrowserRouter([
             },
             {
                 path: "/register",
-                // element: <Register />
+                element: <Register />
             },
             {
                 path: "*",
