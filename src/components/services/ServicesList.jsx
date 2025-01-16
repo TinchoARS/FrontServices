@@ -20,7 +20,21 @@ export const ServicesList = () => {
     return (
         <div className="container">
             <div className="row">
-                <h2 className="mb-4">Services</h2>
+                <h1>Services</h1>
+                <hr />
+            </div>
+
+            <div className="row mb-3">
+                <div className="btn-group">
+                    <button className="btn btn-outline-dark">Todos</button>
+                    <button className="btn btn-outline-dark">Tecnología</button>
+                    <button className="btn btn-outline-dark">Educación</button>
+                    <button className="btn btn-outline-dark">Repostería</button>
+                    <button className="btn btn-outline-dark">Marketing</button>
+                    <button className="btn btn-outline-dark">Salud y Bienestar</button>
+                    <button className="btn btn-outline-dark">Diseño Grafico</button>
+                    <button className="btn btn-outline-dark">Marketing</button>
+                </div>
             </div>
 
             <div className="row">

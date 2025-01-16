@@ -3,6 +3,7 @@ import { Home } from "./components/Home";
 import { Layout } from "./Layout";
 import { NotFound } from "./components/NotFound";
 import { ServicesList } from "./components/services/ServicesList";
+import { ServiceDetails } from "./components/services/ServiceDetails";
 
 export const Router = createBrowserRouter([
     {
@@ -25,7 +26,7 @@ export const Router = createBrowserRouter([
                     },
                     {
                         path: ":idService",
-                        // element: <ServicesDetails />
+                        element: <ServiceDetails />
                     },
                     {
                         path: "addService",
