@@ -9,7 +9,6 @@ export default function Register() {
 
     const [artData, setArtData] = useState({ username: "", lastname: "", email: "", telephone: "", password: ""});
     const [triggerFetch, setTriggerFetch] = useState(false);
-    const token = localStorage.getItem("AuthToken") //const {token} = useAuth("state")// otra forma de obtener el token
 
 
     //VERIFICAR SI SE AGREGAN TODOS LOS DATOS
@@ -24,11 +23,10 @@ export default function Register() {
 
     //POST
     const [{ data, isError, isLoading }, doFetch] = useFetch(
-        `${import.meta.env.VITE_BASE_URL}/register/`,           //'https://sandbox.academiadevelopers.com/harmonyhub/artists/',
+        `${import.meta.env.VITE_BASE_URL}register/`,           //'https://sandbox.academiadevelopers.com/harmonyhub/artists/',
         {
             method: 'POST',
-            headers: {'Content-Type': 'application/json', 'Authorization': `Token ${token}`
-            },
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(updateData),
         }
     );

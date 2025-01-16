@@ -13,7 +13,7 @@ function Login() {
     const [password, setPassword] = useState("");
 
     const [{ data, isError, isLoading }, doFetch] = useFetch(
-        `${import.meta.env.VITE_BASE_URL}/api-auth/`,    //"https://sandbox.academiadevelopers.com/api-auth/",
+        `${import.meta.env.VITE_BASE_URL}login/`,    //"https://sandbox.academiadevelopers.com/api-auth/",
         {
             method: "POST",
             headers: {
