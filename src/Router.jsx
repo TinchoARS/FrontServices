@@ -5,13 +5,22 @@ import { NotFound } from "./components/NotFound";
 import { ServicesList } from "./components/services/ServicesList";
 import { ServiceDetails } from "./components/services/ServiceDetails";
 
+//LOGIN
+import Login from "./components/Auth/Login";
+//Register
+import Register from "./components/Auth/Register";
+//Create Service
+import AddServices from "./components/Create/ServiceCreate";
+
+
+
 export const Router = createBrowserRouter([
     {
         element: <Layout />,
         children: [
             {
                 path: "/login",
-                // element: <Login />
+                element: <Login />
             },
             {
                 path: "/",
@@ -47,7 +56,7 @@ export const Router = createBrowserRouter([
                     },
                     {
                         path: "addService",
-                        // element: <AddServices />
+                        element: <AddServices />
                     }
                 ],
             },
@@ -66,7 +75,7 @@ export const Router = createBrowserRouter([
             },
             {
                 path: "/register",
-                // element: <Register />
+                element: <Register />
             },
             {
                 path: "*",
