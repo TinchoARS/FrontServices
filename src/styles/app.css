@@ -2,17 +2,12 @@ html, body {
   height: 100%;
   padding: 0;
   margin: 0;
-  /* color: #000000; */
 }
 
 body {
   background-color: #B5DBFF;
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  display: absolute;
-  justify-content: center;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .navbar {
@@ -24,45 +19,4 @@ body {
   text-decoration: none;
   display: block;
   color: #e2e2e2;
-}
-
-/* LOGIN */
-.login-container {
-  display: flex;
-  align-items: center;  
-  justify-content: flex-start;  /* Alinea a la izquierda */
-  height: 100vh;
-  padding-left: 50px;  /* Espacio desde la izquierda */
-  background-color: #B5DBFF;  /* Fondo suave */
-  overflow: hidden;  /* Oculta el desbordamiento */
-}
-/*FOLMULARIO DE LOGIN*/
-.login-container form {
-  border: 2px solid #ccc;       
-  border-radius: 10px;          
-  padding: 30px;                
-  /*background-color: #ffffff;    /* Fondo blanco */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Sombra suave */
-  width: 350px;                 /* Ancho fijo */
-}
-
-/* Estilo general para botones */
-.login-container button {
-  width: 100%;               /* Ocupa todo el ancho del formulario */
-  padding: 10px 0;           /* Ajuste de altura */
-  margin-top: 10px;          /* Espacio entre botones */
-  background-color: #007bff; /* Azul de Bootstrap */
-  color: #ffffff;            /* Texto blanco */
-  border: none;              /* Sin borde */
-  border-radius: 5px;        /* Bordes redondeados */
-  font-size: 16px;           /* Tamaño de texto */
-  font-weight: bold;         /* Texto en negrita */
-  cursor: pointer;           /* Manito al pasar el mouse */
-  text-align: center;        /* Centra el texto */
-  transition: background-color 0.3s ease;
-}
-
-/* Efecto hover */
-.login-container button:hover {
-  background-color: #0056b3; /* Azul más oscuro */
 }
