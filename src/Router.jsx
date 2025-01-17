@@ -9,6 +9,7 @@ import { Home } from "./components/layout/Home";
 import { RequestsList } from "./components/requests/RequestsList";
 import { PostsList } from "./components/posts/PostsList";
 import { Profile } from "./components/user/Profile";
+import { ProtectedRoute } from "./security/ProtectedRouter";
 
 export const Router = createBrowserRouter([
     {
@@ -20,14 +21,22 @@ export const Router = createBrowserRouter([
             },
             {
                 path: "/",
-                element: <Home />
+                element: (
+                    <ProtectedRoute>
+                        <Home />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "/services",
                 children: [
                     {
                         index: true,
-                        element: <ServicesList />
+                        element: (
+                            <ProtectedRoute>
+                                <ServicesList />
+                            </ProtectedRoute>
+                        ),
                     },
                     {
                         path: ":idService",
@@ -44,7 +53,11 @@ export const Router = createBrowserRouter([
                 children: [
                     {
                         index: true,
-                        element: <RequestsList />
+                        element: (
+                            <ProtectedRoute>
+                                <RequestsList />
+                            </ProtectedRoute>
+                        ),
                     },
                     {
                         path: ":idService",
@@ -61,7 +74,11 @@ export const Router = createBrowserRouter([
                 children: [
                     {
                         index: true,
-                        element: <PostsList />
+                        element: (
+                            <ProtectedRoute>
+                                <PostsList />
+                            </ProtectedRoute>
+                        ),
                     },
                     {
                         path: ":idPost",
@@ -82,7 +99,11 @@ export const Router = createBrowserRouter([
                 children: [
                     {
                         index: true,
-                        element: <Profile />
+                        element: (
+                            <ProtectedRoute>
+                                <Profile />
+                            </ProtectedRoute>
+                        ),
                     },
                     {
                         path: "edit",
