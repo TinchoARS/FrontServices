@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import useFetch from "../../hooks/fetchHook";
 import { useNavigate } from "react-router-dom";
 import '../../styles/app.css'

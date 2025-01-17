@@ -4,15 +4,11 @@ import { Layout } from "./Layout";
 import { NotFound } from "./components/NotFound";
 import { ServicesList } from "./components/services/ServicesList";
 import { ServiceDetails } from "./components/services/ServiceDetails";
-
-//LOGIN
-import Login from "./components/Auth/Login";
 //Register
 import Register from "./components/Auth/Register";
 //Create Service
 import AddServices from "./components/Create/ServiceCreate";
-
-
+import { Login } from "./components/Auth/Login";
 
 export const Router = createBrowserRouter([
     {
