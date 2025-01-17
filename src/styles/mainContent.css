@@ -9,5 +9,6 @@ body {
     display: block;
     margin-left: 190px;
     padding: 20px;
+    min-height: 100vh;
     background-color:#b5dbff; /* Ajusta según la altura de tu navbar */
 }
