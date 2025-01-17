@@ -1,19 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-//import "../../styles/css/login.css"
 import useFetch from "../../hooks/fetchHook";
 import { useAuth } from "../../contexts/AuthContext";
-import '../../styles/app.css'
-import '../../styles/mainContent.css'
 
-function Login() {
+export const Login = () => {
     const [triggerFetch, setTriggerFetch] = useState(false);
-
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const [{ data, isError, isLoading }, doFetch] = useFetch(
-        `${import.meta.env.VITE_BASE_URL}login/`,    //"https://sandbox.academiadevelopers.com/api-auth/",
+        `${import.meta.env.VITE_BASE_URL}login/`,
         {
             method: "POST",
             headers: {
@@ -23,64 +19,60 @@ function Login() {
         }
     );
 
-    const { login } = useAuth("actions"); // Obtenemos la accion
+    const { login } = useAuth("actions");
 
-    function handleSubmit(event) { //recibimos el formulario <form onSubmit={handleSubmit}>
+    function handleSubmit(event) {
         event.preventDefault();
         setTriggerFetch(true);
         doFetch();
     }
 
-    function handleChange(event) {//recivimos el username y password de consola
+    function handleChange(event) {
         const { name, value } = event.target;
         if (name === "username") setUsername(value);
         if (name === "password") setPassword(value);
-
     }
 
-    /*Para que login obtenga un token y poder iniciar (ACTION.LOGIN)
-    Tiene que haber una coneccion estable:
-        - triggerFetch: Enviar los datos (true)
-        - data : Debemos obtener sus datos
-        - isError: No debe haber errores*/
     useEffect(() => {
         if (data && !isError && triggerFetch) {
-            login(data.token, username, password); //login y contexto obtiene un token y datos personales
-            console.log("Token: ", data.token, " username: ", username, " password: ", password)
+            login(data.access);
         }
     }, [data, isError, triggerFetch])
 
 
-    const navigate = useNavigate();
-
     return (
-        <div className="login-container">
-            <form onSubmit={handleSubmit}>
-            <label for="exampleInputPassword1" className="form-label">Login</label>
-                <div className="mb-3">
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Usuario"  aria-describedby="emailHelp"
-                        value={username}
-                        onChange={handleChange}/>
-                        
+        <div className="container">
+            <div className="row">
+                <div className="col-4"></div>
+                <div className="col-12 col-md-4">
+                    <h2 className="text-center mb-5">Iniciar Sesion</h2>
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                        <label htmlFor="username" className="form-label">Usuario</label>
+                        <input type="text" className="form-control" id="username" name="username" defaultValue="" onChange={handleChange} required autoComplete="username"/>
+                        </div>
+                        <div className="mb-3">
+                        <label htmlFor="password" className="form-label">Contraseña</label>
+                        <input type="password" className="form-control" id="password" name="password" defaultValue="" onChange={handleChange} required autoComplete="new-password"/>
+                        </div>
+                        <div className="mb-3">
+                        <p >
+                            Si no tienes cuenta, crea una <span> <a href="/register">aqui</a></span>
+                        </p>
+                        </div>
+                        <div className="mb-3 text-center">
+                        <div className="control">
+                            <button type="submit" className="btn btn-primary text-center">Ingresar</button>
+                            {isLoading && triggerFetch && (
+                                <p>Cargando...</p>
+                            )}
+                            {isError && <p>Error al cargar los datos.</p>}
+                        </div>
+                        </div>
+                    </form>
                 </div>
-                <div className="mb-3">
-                    <input type="password" class="form-control" id="password" placeholder="Password" name="password"
-                        value={password}
-                        onChange={handleChange}/>
-                </div>
-
-                <div>
-                    <button type="submit" className="btn btn-primary">Sing Up</button>
-                    {isLoading && triggerFetch && (<p>Cargando...</p>)}
-                    {isError && <p>Error al cargar los datos.</p>}
-                    {data && (<p>logeado</p>)}
-                </div>
-                <button type="submit" className="btn btn-primary" onClick={() => navigate("/register")}>Create count</button>
-            </form>
+                <div className="col-4"></div>
+            </div>
         </div>
     );
 }
-
-export default Login;
-
-

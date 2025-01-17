@@ -1,16 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Home } from "./components/Home";
 import { Layout } from "./Layout";
 import { NotFound } from "./components/NotFound";
-
-//LOGIN
-import Login from "./components/Auth/Login";
-//Register
-import Register from "./components/Auth/Register";
-//Create Service
-import AddServices from "./components/Create/ServiceCreate";
-
-
+import { ServicesList } from "./components/services/ServicesList";
+import { ServiceDetails } from "./components/services/ServiceDetails";
+import { Login } from "./components/Auth/Login";
+import { Register } from "./components/Auth/Register";
+import { Home } from "./components/layout/Home";
+import { RequestsList } from "./components/requests/RequestsList";
+import { PostsList } from "./components/posts/PostsList";
+import { Profile } from "./components/user/Profile";
 
 export const Router = createBrowserRouter([
     {
@@ -29,15 +27,32 @@ export const Router = createBrowserRouter([
                 children: [
                     {
                         index: true,
-                        // element: <Services />
+                        element: <ServicesList />
                     },
                     {
                         path: ":idService",
-                        // element: <ServicesDetails />
+                        element: <ServiceDetails />
                     },
                     {
                         path: "addService",
-                        element: <AddServices />
+                        // element: <AddServices />
+                    }
+                ],
+            },
+            {
+                path: "/requests",
+                children: [
+                    {
+                        index: true,
+                        element: <RequestsList />
+                    },
+                    {
+                        path: ":idService",
+                        // element: <RequestsDetails />
+                    },
+                    {
+                        path: "addService",
+                        // element: <AddRequests />
                     }
                 ],
             },
@@ -46,7 +61,7 @@ export const Router = createBrowserRouter([
                 children: [
                     {
                         index: true,
-                        // element: <Posts />
+                        element: <PostsList />
                     },
                     {
                         path: ":idPost",
@@ -67,7 +82,7 @@ export const Router = createBrowserRouter([
                 children: [
                     {
                         index: true,
-                        // element: <UserProfile />
+                        element: <Profile />
                     },
                     {
                         path: "edit",

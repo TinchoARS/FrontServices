@@ -1,39 +1,34 @@
-import { Outlet, useLocation } from "react-router-dom"
-import { NavBar } from "./components/layout/NavBar"
-//import { TopBar } from "./components/layout/TopBar";
-//import { SideBar } from "./components/layout/SideBar";
-//import { Footer } from "./components/layout/Footer";
-//import { Banner } from "./components/layout/Banner"
-import { AuthProvider, useAuth } from "./contexts/AuthContext"
-import './styles/app.css'
+import { Outlet } from "react-router-dom"
+import { AuthProvider } from "./contexts/AuthContext"
 import './styles/mainContent.css'
+import './styles/SideBar.css'
+import { SideBar } from "./components/layout/SideBar"
 
 export const Layout = () => {
-  const location = useLocation();
-  const path = location.pathname.toLowerCase();  // Normaliza la ruta
-
-  //  Incluye coincidencias parciales como /login/reset
-  const isLogin = path.startsWith("/login");
-  const isRegister = path.startsWith("/register");
-
-  const mainClassName = isLogin || isRegister  ? 'login-container' : '';
-
   return (
     <AuthProvider>
-      <div className={mainClassName}>
-        <div className="row">
-          <div className="col-12">
-          {(!isLogin && !isRegister) && <NavBar />}
+        <div className="App">
+          <div className="d-flex flex-column">
+            <SideBar />
+            <div className="main-content">
+              <Outlet /> {/* Es reemplazado por el componente hijo */}
+              {/* NOTIFICACIONES */}
+              {/* <ToastContainer 
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+              /> */}
+            </div>
           </div>
         </div>
-
-        <div className="row">
-          <div className="main-content">
-            <Outlet />
-          </div>
-        </div>
-        </div>
-    </AuthProvider>
+      </AuthProvider>
     
   )
 }
