@@ -1,5 +1,4 @@
 import { Outlet } from "react-router-dom"
-import { NavBar } from "./components/layout/NavBar"
 import { AuthProvider } from "./contexts/AuthContext"
 import './styles/mainContent.css'
 import './styles/SideBar.css'
@@ -9,7 +8,6 @@ export const Layout = () => {
   return (
     <AuthProvider>
         <div className="App">
-          <NavBar/>
           <div className="d-flex flex-column">
             <SideBar />
             <div className="main-content">
