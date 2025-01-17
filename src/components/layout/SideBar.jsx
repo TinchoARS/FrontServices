@@ -9,7 +9,7 @@ export const SideBar = () => {
       </div>
       <div className="row">
         <NavLink
-          to="/search"
+          to="/"
           className={({ isActive, isPending, isTransitioning }) =>
             [
               isPending ? "pending" : "",
@@ -25,7 +25,7 @@ export const SideBar = () => {
         </NavLink>
 
         <NavLink
-          to="/explore"
+          to="/services"
           className={({ isActive, isPending, isTransitioning }) =>
             [
               isPending ? "pending" : "",
@@ -41,7 +41,7 @@ export const SideBar = () => {
         </NavLink>
 
         <NavLink
-          to="/favorites"
+          to="/posts"
           className={({ isActive, isPending, isTransitioning }) =>
             [
               isPending ? "pending" : "",
@@ -57,7 +57,7 @@ export const SideBar = () => {
         </NavLink>
 
         <NavLink
-          to="/playlists"
+          to="/requests"
           className={({ isActive, isPending, isTransitioning }) =>
             [
               isPending ? "pending" : "",
@@ -73,7 +73,7 @@ export const SideBar = () => {
         </NavLink>
 
         <NavLink
-          to="/albums"
+          to="/saved"
           className={({ isActive, isPending, isTransitioning }) =>
             [
               isPending ? "pending" : "",
@@ -89,7 +89,7 @@ export const SideBar = () => {
         </NavLink>
 
         <NavLink
-          to="/genres"
+          to="/profile"
           className={({ isActive, isPending, isTransitioning }) =>
             [
               isPending ? "pending" : "",

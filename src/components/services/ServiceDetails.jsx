@@ -7,7 +7,7 @@ import { SlArrowLeft } from "react-icons/sl";
 
 export const ServiceDetails = () => {
     const { idService } = useParams();
-    const { token } = useAuth();
+    const { token } = useAuth('state');
     const navigate = useNavigate();
     const [ {data, isLoading, errors}, doFetch ] = useFetch(`http://127.0.0.1:8000/api/services/${idService}`, {
         method: 'GET',
@@ -29,6 +29,10 @@ export const ServiceDetails = () => {
         const date = new Date(dateTimeString);
         const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
         return date.toLocaleDateString('es-ES', options);
+    };
+
+    const viewPosts = () => {
+        navigate(`/posts`);
     };
 
     return (
@@ -60,7 +64,7 @@ export const ServiceDetails = () => {
                             </li>
                         </ul>
                         <div className="card-body">
-                            <button className="btn btn-outline-dark fw-bold w-100">
+                            <button className="btn btn-outline-dark fw-bold w-100" onClick={viewPosts}>
                                 Ver publicaciones de este servicio
                             </button>
                         </div>

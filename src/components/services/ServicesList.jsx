@@ -20,7 +20,7 @@ export const ServicesList = () => {
     return (
         <div className="container">
             <div className="row">
-                <h1>Services</h1>
+                <h1>Servicios</h1>
                 <hr />
             </div>
 

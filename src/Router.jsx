@@ -6,6 +6,8 @@ import { ServiceDetails } from "./components/services/ServiceDetails";
 import { Login } from "./components/Auth/Login";
 import { Register } from "./components/Auth/Register";
 import { Home } from "./components/layout/Home";
+import { RequestsList } from "./components/requests/RequestsList";
+import { PostsList } from "./components/posts/PostsList";
 
 export const Router = createBrowserRouter([
     {
@@ -41,15 +43,15 @@ export const Router = createBrowserRouter([
                 children: [
                     {
                         index: true,
-                        // element: <Requets />
+                        element: <RequestsList />
                     },
                     {
                         path: ":idService",
-                        // element: <ServicesDetails />
+                        // element: <RequestsDetails />
                     },
                     {
                         path: "addService",
-                        // element: <AddServices />
+                        // element: <AddRequests />
                     }
                 ],
             },
@@ -58,7 +60,7 @@ export const Router = createBrowserRouter([
                 children: [
                     {
                         index: true,
-                        // element: <Posts />
+                        element: <PostsList />
                     },
                     {
                         path: ":idPost",
