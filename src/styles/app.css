@@ -1,16 +1,13 @@
 html, body {
+  height: 100%;
   padding: 0;
   margin: 0;
-  background-color: #e1e1e1;
 }
 
 body {
   background-color: #B5DBFF;
-  margin: 0;
-  padding: 0;
-  display: absolute;
-  justify-content: center;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .navbar {
