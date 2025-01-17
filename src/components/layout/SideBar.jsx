@@ -4,96 +4,110 @@ import { NavLink } from "react-router-dom";
 export const SideBar = () => {
   return (
     <div className="sidebar d-flex flex-column p-3">
-      <NavLink
-        to="/search"
-        className={({ isActive, isPending, isTransitioning }) =>
-          [
-            isPending ? "pending" : "",
-            isActive ? "text-white" : "",
-            isTransitioning ? "transitioning" : "",
-          ].join(" ")
-        }
-      >
-        Search
-      </NavLink>
+      <div className="row">
+        <img src="src/assets/logo.png" alt="logo Servify"/>
+      </div>
+      <div className="row">
+        <NavLink
+          to="/search"
+          className={({ isActive, isPending, isTransitioning }) =>
+            [
+              isPending ? "pending" : "",
+              isActive ? "nav-link active text-dark bold" : "nav-link",
+              isTransitioning ? "transitioning" : "",
+            ].join(" ")
+          }
+          style={({ isActive }) =>
+            isActive ? { textDecoration: "underline", fontWeight: "bold"} : {}
+          }
+        >
+          Inicio
+        </NavLink>
 
-      <NavLink
-        to="/explore"
-        className={({ isActive, isPending, isTransitioning }) =>
-          [
-            isPending ? "pending" : "",
-            isActive ? "text-white" : "",
-            isTransitioning ? "transitioning" : "",
-          ].join(" ")
-        }
-      >
-        Explore
-      </NavLink>
+        <NavLink
+          to="/explore"
+          className={({ isActive, isPending, isTransitioning }) =>
+            [
+              isPending ? "pending" : "",
+              isActive ? "nav-link active text-dark bold" : "",
+              isTransitioning ? "transitioning" : "",
+            ].join(" ")
+          }
+          style={({ isActive }) =>
+            isActive ? { textDecoration: "underline", fontWeight: "bold"} : {}
+          }
+        >
+          Servicios
+        </NavLink>
 
-      <NavLink
-        to="/favorites"
-        className={({ isActive, isPending, isTransitioning }) =>
-          [
-            isPending ? "pending" : "",
-            isActive ? "text-white" : "",
-            isTransitioning ? "transitioning" : "",
-          ].join(" ")
-        }
-      >
-        Favorites
-      </NavLink>
+        <NavLink
+          to="/favorites"
+          className={({ isActive, isPending, isTransitioning }) =>
+            [
+              isPending ? "pending" : "",
+              isActive ? "nav-link active text-dark bold" : "",
+              isTransitioning ? "transitioning" : "",
+            ].join(" ")
+          }
+          style={({ isActive }) =>
+            isActive ? { textDecoration: "underline", fontWeight: "bold"} : {}
+          }
+        >
+          Publicaciones
+        </NavLink>
 
-      <NavLink
-        to="/playlists"
-        className={({ isActive, isPending, isTransitioning }) =>
-          [
-            isPending ? "pending" : "",
-            isActive ? "text-white" : "",
-            isTransitioning ? "transitioning" : "",
-          ].join(" ")
-        }
-      >
-        PlayLists
-      </NavLink>
+        <NavLink
+          to="/playlists"
+          className={({ isActive, isPending, isTransitioning }) =>
+            [
+              isPending ? "pending" : "",
+              isActive ? "nav-link active text-dark bold" : "",
+              isTransitioning ? "transitioning" : "",
+            ].join(" ")
+          }
+          style={({ isActive }) =>
+            isActive ? { textDecoration: "underline", fontWeight: "bold"} : {}
+          }
+        >
+          Mis solicitudes
+        </NavLink>
 
-      <NavLink
-        to="/albums"
-        className={({ isActive, isPending, isTransitioning }) =>
-          [
-            isPending ? "pending" : "",
-            isActive ? "text-white" : "",
-            isTransitioning ? "transitioning" : "",
-          ].join(" ")
-        }
-      >
-        Albums
-      </NavLink>
+        <NavLink
+          to="/albums"
+          className={({ isActive, isPending, isTransitioning }) =>
+            [
+              isPending ? "pending" : "",
+              isActive ? "nav-link active text-dark bold" : "",
+              isTransitioning ? "transitioning" : "",
+            ].join(" ")
+          }
+          style={({ isActive }) =>
+            isActive ? { textDecoration: "underline", fontWeight: "bold"} : {}
+          }
+        >
+          Guardado
+        </NavLink>
 
-      <NavLink
-        to="/genres"
-        className={({ isActive, isPending, isTransitioning }) =>
-          [
-            isPending ? "pending" : "",
-            isActive ? "text-white" : "",
-            isTransitioning ? "transitioning" : "",
-          ].join(" ")
-        }
-      >
-        Genres
-      </NavLink>
-
-      <NavLink
-        to="/artists"
-        className={({ isActive, isPending, isTransitioning }) =>
-          [
-            isPending ? "pending" : "",
-            isActive ? "text-white" : "",
-            isTransitioning ? "transitioning" : "",
-          ].join(" ")
-        }
-      >
-        Artist
-      </NavLink>
+        <NavLink
+          to="/genres"
+          className={({ isActive, isPending, isTransitioning }) =>
+            [
+              isPending ? "pending" : "",
+              isActive ? "nav-link active text-dark bold" : "",
+              isTransitioning ? "transitioning" : "",
+            ].join(" ")
+          }
+          style={({ isActive }) =>
+            isActive ? { textDecoration: "underline", fontWeight: "bold"} : {}
+          }
+        >
+          Perfil
+        </NavLink>
+      </div>
+    
+      <div className="row m-1">
+        <button className="btn btn-danger mt-5">Cerrar sesión</button>
+      </div>
     </div>
   );
 }
