@@ -1,5 +1,4 @@
 html, body {
-  height: 100%;
   padding: 0;
   margin: 0;
   background-color: #e1e1e1;
@@ -9,7 +8,6 @@ body {
   background-color: #B5DBFF;
   margin: 0;
   padding: 0;
-  height: 100vh;
   display: absolute;
   justify-content: center;
   align-items: center;

@@ -4,11 +4,8 @@ import { Layout } from "./Layout";
 import { NotFound } from "./components/NotFound";
 import { ServicesList } from "./components/services/ServicesList";
 import { ServiceDetails } from "./components/services/ServiceDetails";
-//Register
-import Register from "./components/Auth/Register";
-//Create Service
-import AddServices from "./components/Create/ServiceCreate";
 import { Login } from "./components/Auth/Login";
+import { Register } from "./components/Auth/Register";
 
 export const Router = createBrowserRouter([
     {
@@ -52,7 +49,7 @@ export const Router = createBrowserRouter([
                     },
                     {
                         path: "addService",
-                        element: <AddServices />
+                        // element: <AddServices />
                     }
                 ],
             },

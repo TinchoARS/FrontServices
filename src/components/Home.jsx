@@ -4,7 +4,6 @@ export const Home = () => {
           className="container text-center"
           style={{
               backgroundColor: '#B5DBFF',
-              minHeight: '100vh',
               fontFamily: 'Inter',
               padding: '20px',
             
