@@ -1,7 +1,16 @@
 import '../../styles/SideBar.css'
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const SideBar = () => {
+    const { logout } = useAuth("actions");
+
+    // funcion para cerrar sesion
+    const handleLogout = () => {
+      logout();
+      window.location.href = '/login';
+    };
+
   return (
     <div className="sidebar d-flex flex-column p-3">
       <div className="row">
@@ -106,7 +115,7 @@ export const SideBar = () => {
       </div>
     
       <div className="row m-1">
-        <button className="btn btn-danger mt-5">Cerrar sesión</button>
+        <button className="btn btn-danger mt-5" onClick={handleLogout}>Cerrar sesión</button>
       </div>
     </div>
   );
