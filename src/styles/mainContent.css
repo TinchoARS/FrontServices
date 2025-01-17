@@ -1,7 +1,7 @@
 /* Contenido principal */
 .main-content {
     display: block;
-    margin-left: 150px;
+    margin-left: 190px;
     padding: 20px;
     background-color:#b5dbff; /* Ajusta según la altura de tu navbar */
 }
