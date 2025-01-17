@@ -61,11 +61,11 @@ export const Router = createBrowserRouter([
                         ),
                     },
                     {
-                        path: ":idService",
-                        // element: <RequestsDetails />
+                        path: ":idPost",
+                         //element: <RequestsDetails />
                     },
                     {
-                        path: "addService",
+                        path: "addRequest",
                         // element: <AddRequests />
                     }
                 ],
