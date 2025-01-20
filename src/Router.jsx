@@ -10,7 +10,6 @@ import { RequestsList } from "./components/requests/RequestsList";
 import { PostsList } from "./components/posts/PostsList";
 import { Profile } from "./components/user/Profile";
 import { ProtectedRoute } from "./security/ProtectedRouter";
-import { Ratings } from "./components/Ratings/ratings";
 
 export const Router = createBrowserRouter([
     {
@@ -45,7 +44,7 @@ export const Router = createBrowserRouter([
                     },
                     {
                         path: "addService",
-                        // element: <AddServices />
+                        element: <FormServiceAdd />
                     }
                 ],
             },

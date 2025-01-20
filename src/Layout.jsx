@@ -7,7 +7,7 @@ import { SideBar } from "./components/layout/SideBar"
 export const Layout = () => {
   return (
     <AuthProvider>
-        <div className="App">
+        <div className="App" >
           <div className="d-flex flex-column">
             <SideBar />
             <div className="main-content">
