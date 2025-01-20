@@ -38,12 +38,12 @@ export const PostCard = ({ post }) => {
         // por ejemplo, actualizando el estado del post, o realizando un fetch nuevamente
         setIsModalOpen(false); // Cerrar el modal
         navigate('/requests');  
-    } else {
-        alert('Hubo un error al registrar la solicitud');
+      } else {
+          alert('Hubo un error al registrar la solicitud');
+        }
+      } catch (error) {
+        alert('Error en la solicitud', error);
       }
-    } catch (error) {
-      alert('Error en la solicitud');
-    }
   };
 
   return (
