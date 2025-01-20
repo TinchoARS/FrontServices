@@ -10,8 +10,8 @@ import { RequestsList } from "./components/requests/RequestsList";
 import { PostsList } from "./components/posts/PostsList";
 import { Profile } from "./components/user/Profile";
 import { ProtectedRoute } from "./security/ProtectedRouter";
-import { Ratings } from "./components/Ratings/ratings";
 import { FormServiceAdd } from "./components/services/FormServiceAdd";
+import { FormPostAdd } from "./components/posts/FormPostAdd";
 
 export const Router = createBrowserRouter([
     {
@@ -85,6 +85,10 @@ export const Router = createBrowserRouter([
                     {
                         path: ":idPost",
                         // element: <PostsDetails />
+                    },
+                    {
+                        path: "addPost",
+                        element: <FormPostAdd />
                     }
                 ],
             },
