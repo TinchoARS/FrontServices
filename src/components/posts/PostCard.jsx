@@ -1,15 +1,16 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from 'react-router-dom';
 
 
 export const PostCard = ({ post }) => {
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar el modal
   const [message, setMessage] = useState(''); // Estado para el mensaje del usuario
   const { token } = useAuth('state');
+  const navigate = useNavigate();
 
-  const anchoCard = {
-    width: 'auto',
-  };
+  const anchoCard = { width: '100%' };
 
   const handleClick = () => {
     setIsModalOpen(true); // Mostrar el modal al hacer clic
@@ -46,29 +47,29 @@ export const PostCard = ({ post }) => {
   };
 
   return (
-    <div className="card" style={anchoCard}>
-      <div className="card-body">
-        <h5 className="card-title">{post.description}</h5>
-        <li className="list-group-item">
-          <span className="badge text-bg-dark">creado el {new Date(post.datecreated).toISOString().slice(0, 19).replace('T', ' ')}</span>
-          <br />
-          <span className="badge text-bg-dark">{post.service.title}</span>
-        </li>
-      </div>
-      <ul className="list-group list-group-flush">
-        <li className="list-group-item">Disponibilidad: {post.disponibility}</li>
-      </ul>
-      <ul className="list-group list-group-flush">
-        <li className="list-group-item"><strong>Publicado por: {post.user.username}</strong></li>
-      </ul>
-      <div className="card-body">
-        <button
-          className="btn btn-outline-dark fw-bold w-100"
-          style={{ backgroundColor: '#66b3a5', color: 'white' }}
-          onClick={handleClick}
-        >
-          contratar servicio
-        </button>
+    <div className="card mb-3" style={anchoCard}>
+      <div className="row g-0">
+        <div className="col-md-1">
+          <img src='src/assets/userLogo.jpeg' alt="User" className="img-fluid rounded-start p-2" width={'100px'}/>
+        </div>
+        <div className="col-md-11">
+          <div className="card-body">
+            <h5 className="card-title">{post.user.first_name} {post.user.last_name}</h5>
+            <p className="card-text">{post.description}</p>
+            <span className="badge text-bg-dark">{post.service.title}</span>
+            <p className="card-text">Disponibilidad: {post.disponibility}</p>
+            <p className="card-text">
+              <small className="text-muted">creado el {new Date(post.datecreated).toISOString().slice(0, 19).replace('T', ' ')}</small>
+            </p>
+            <button
+              className="btn btn-outline-dark fw-bold w-100 mt-3"
+              style={{ backgroundColor: '#66b3a5', color: 'white' }}
+              onClick={handleClick}
+            >
+              Contratar servicio
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Modal de confirmación */}

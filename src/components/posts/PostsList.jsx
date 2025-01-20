@@ -26,7 +26,7 @@ export const PostsList = () => {
                         <div className="alert alert-warning text-center" role='alert'>No hay posts disponibles.</div>
                     ) : (
                         data.map((post, index) => (
-                            <div key={index} className="col-12 col-md-4 mb-4">
+                            <div key={index} className="col-12 mb-4">
                                 <PostCard key={index} post={post} />
                             </div>
                         ))

@@ -1,6 +1,14 @@
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #e9e9e9;
+}
+
 /* Contenido principal */
 .main-content {
-    margin-left: 250px;
+    display: block;
+    margin-left: 190px;
     padding: 20px;
-    margin-top: 10px; /* Ajusta según la altura de tu navbar */
+    min-height: 100vh;
+    background-color:#b5dbff; /* Ajusta según la altura de tu navbar */
 }
