@@ -12,6 +12,7 @@ import { Profile } from "./components/user/Profile";
 import { ProtectedRoute } from "./security/ProtectedRouter";
 import { FormServiceAdd } from "./components/services/FormServiceAdd";
 import { FormPostAdd } from "./components/posts/FormPostAdd";
+import {Ratings} from "./components/ratings/Ratings";
 
 export const Router = createBrowserRouter([
     {
