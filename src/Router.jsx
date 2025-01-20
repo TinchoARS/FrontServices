@@ -63,7 +63,7 @@ export const Router = createBrowserRouter([
                     },
                     {
                         path: ":idPost",
-                         //element: <RequestsDetails />
+                        //element: <RequestsDetails />
                     },
                     {
                         path: "addRequest",
@@ -89,6 +89,19 @@ export const Router = createBrowserRouter([
                     {
                         path: "addPost",
                         element: <FormPostAdd />
+                    }
+                ],
+            },
+            {
+                path: "/ratings",
+                children: [
+                    {
+                        index: true,
+                        element: (
+                            <ProtectedRoute>
+                                <Ratings />
+                            </ProtectedRoute>
+                        )
                     }
                 ],
             },
