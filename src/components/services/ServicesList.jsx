@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import useFetch from '../../hooks/fetchHook';
+import useFetch from '../../hooks/fetchToFilters';
 import { useEffect, useState } from 'react';
 import { ServiceCard } from './ServiceCard';
 import { CgMathPlus } from "react-icons/cg";
@@ -11,6 +11,8 @@ export const ServicesList = () => {
     const navigate = useNavigate();
     const { token } = useAuth('state');
     const [user, setUser] = useState(null)
+    const [category, setCategory] = useState('');
+    const [title, setTitle] = useState('');
     const [ {data, isLoading, errors}, doFetch ] = useFetch(`${import.meta.env.VITE_BASE_URL}api/services`, {
         method: 'GET',
     });
@@ -47,6 +49,35 @@ export const ServicesList = () => {
         navigate('/services/addService');
     };
 
+    const handleSearch = (event) => {
+        event.preventDefault();
+        const query = new URLSearchParams();
+        if (category) query.append('category', category);
+        if (title) query.append('title', title);
+        const searchUrl = `${import.meta.env.VITE_BASE_URL}api/services/?${query.toString()}`;
+        console.log('Search URL:', searchUrl); // Añadir este log para verificar la URL
+        doFetch(searchUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    };
+
+    const handleClearFilters = () => {
+        setCategory('');
+        setTitle('');
+        doFetch(
+            `${import.meta.env.VITE_BASE_URL}api/services`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+    };
+
     if (isLoading) return <div className='container text-center'>Cargando...</div>;
     if (errors) return <div className='container text-center'>Error al cargar los servicios.</div>;
     if (!data) return <div className='container text-center'>La Sesion ha expirado, vuelva a iniciar sesion.</div>;
@@ -66,15 +97,27 @@ export const ServicesList = () => {
             <hr />
 
             <div className="row mb-3">
-                <div className="btn-group">
-                    <button className="btn btn-outline-dark">Todos</button>
-                    <button className="btn btn-outline-dark">Tecnología</button>
-                    <button className="btn btn-outline-dark">Educación</button>
-                    <button className="btn btn-outline-dark">Repostería</button>
-                    <button className="btn btn-outline-dark">Marketing</button>
-                    <button className="btn btn-outline-dark">Salud y Bienestar</button>
-                    <button className="btn btn-outline-dark">Diseño Grafico</button>
-                    <button className="btn btn-outline-dark">Marketing</button>
+                <div className="col-md-12">
+                <form className="d-flex" role="search" onSubmit={handleSearch}>
+                        <input
+                            className="form-control me-2"
+                            type="search"
+                            placeholder="Filtrar por categoria"
+                            aria-label="Category"
+                            value={category}
+                            onChange={(event) => setCategory(event.target.value)}
+                        />
+                        <input
+                            className="form-control me-2"
+                            type="search"
+                            placeholder="Filtrar por nombre"
+                            aria-label="title"
+                            value={title}
+                            onChange={(event) => setTitle(event.target.value)}
+                        />
+                        <button className="btn btn-outline-success me-2" type="submit">Filtrar</button>
+                        <button className="btn btn-outline-danger" type="button" onClick={handleClearFilters}>Limpiar</button>
+                    </form>
                 </div>
             </div>
 
