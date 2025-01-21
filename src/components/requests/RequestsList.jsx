@@ -26,7 +26,7 @@ export const RequestsList = () => {
     useEffect(() => {
         if (profileData && requestsData) {
             if(profileData.is_finder){
-            const filtered = requestsData.filter(request => request.user_id === profileData.id);
+            const filtered = requestsData.filter(request => request.user.id === profileData.id);
             setFilteredRequests(filtered);
         } else if (profileData.is_supplier){
             const filtered = requestsData.filter(request => request.post.user.id === profileData.id);
