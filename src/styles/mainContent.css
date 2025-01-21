@@ -7,7 +7,7 @@ body {
 /* Contenido principal */
 .main-content {
     display: block;
-    margin-left: 190px;
+    margin-left: 200px;
     padding: 20px;
     min-height: 100vh;
     background-color:#b5dbff; /* Ajusta según la altura de tu navbar */
