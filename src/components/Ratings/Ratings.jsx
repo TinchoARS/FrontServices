@@ -9,7 +9,7 @@ export const Ratings = () => {
     const { token } = useAuth('state');
     const [feedbackMessage, setFeedbackMessage] = useState('');
     const location = useLocation();
-    const { firstName, lastName, userId } = location.state || {}; // Extrae los datos del estado
+    const { firstName, lastName, id_oferente } = location.state || {}; // Extrae los datos del estado
     const [{ data_user, isLoading_user, errors_user }, doFetch_user] = useFetch(`${import.meta.env.VITE_BASE_URL}api/profile/`, {
         method: 'GET',
         headers: {
@@ -21,7 +21,7 @@ export const Ratings = () => {
         doFetch_user();
     }, []);
 
-    const [formData, setFormData] = useState({ rating: "", comment: "", oferente_id: userId || "", buscador_id: "",});
+    const [formData, setFormData] = useState({ rating: "", comment: "", oferente_id: id_oferente || "", buscador_id: "",});
 
     useEffect(() => {
         if (data_user) {
@@ -148,7 +148,7 @@ export const Ratings = () => {
                 </div>
             </div>
 
-            <Rating_Oferente userId={userId} />
+            <Rating_Oferente id_oferente={id_oferente} />
 
         </div>
     )

@@ -4,7 +4,7 @@ import useFetch from '../../hooks/fetchHook';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-export const Rating_Oferente = ({userId}) => {
+export const Rating_Oferente = ({ id_oferente }) => {
     const { token } = useAuth('state');
     const [{ data, isLoading, errors }, doFetch] = useFetch(`${import.meta.env.VITE_BASE_URL}api/ratings/`, {
         method: 'GET',
@@ -22,8 +22,18 @@ export const Rating_Oferente = ({userId}) => {
     if (errors) return <div className='container text-center'>Error al cargar datos del perfil.</div>;
     if (!data) return <div className='container text-center'>La Sesion ha expirado, vuelva a iniciar sesion.</div>;
 
-    // Filtrar los ratings que coincidan con el userId
-    const filteredRatings = data.filter((rating) => rating.oferenteId  === userId); // OFERENTE !
+    // Filtrar los ratings
+    const filteredRatings = data.filter((rating) => rating.oferenteId  === id_oferente); // OFERENTE !
+
+    /* Filtrar los ratings según el rol (buscador u oferente)
+    const filteredRatings = data.filter((rating) => {
+        if (isBuscador) {
+            return rating.oferenteId === id_oferente && rating.servicioId === id_servicio;
+        } else {
+            return rating.oferenteId === id_oferente;
+        }
+    });*/
+
 
     // Estilos para las estrellas de calificación
     const starStyles = {

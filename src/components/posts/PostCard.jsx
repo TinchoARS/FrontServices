@@ -29,7 +29,7 @@ export const PostCard = ({ post }) => {
       state: {
         firstName: post.user.first_name,
         lastName: post.user.last_name,
-        userId: post.user.id, // id del oferente para traer sus ratings
+        id_oferente: post.user.id, // id del oferente para traer sus ratings
       },
     });
   };
