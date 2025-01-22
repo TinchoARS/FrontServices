@@ -2,12 +2,18 @@
 import { useEffect, useState } from 'react';
 import useFetch from '../../hooks/fetchHook';
 import { useAuth } from '../../contexts/AuthContext';
+import { useLocation } from 'react-router-dom';
+import { Rating_Oferente } from './Ratings_Oferente';
 
 export const Ratings = () => {
     const { token } = useAuth('state');
     const [feedbackMessage, setFeedbackMessage] = useState('');
+    const location = useLocation();
+    const { firstName, lastName, userId } = location.state || {}; // Extrae los datos del estado
     const [formData, setFormData] = useState({ rating: "", comment: "" })
-    const [{ data, isLoading, errors }, doFetch] = useFetch(`${import.meta.env.VITE_BASE_URL}api/profile/`, {
+
+    //obtener todas la calificaciones del oferente
+    const [{ data, isLoading, errors }, doFetch] = useFetch(`${import.meta.env.VITE_BASE_URL}api/ratings/`, { 
         method: 'GET',
         headers: {
             'Authorization': `Token ${token}`,
@@ -42,7 +48,7 @@ export const Ratings = () => {
     Rating: Puntuación.
     Comment: Comentario. */
 
-
+    // enviar calificacion al oferente
     const [{ data_R, isError_R, isLoading_R }, doFetch_R] = useFetch(
         `${import.meta.env.VITE_BASE_URL}api/ratings/`,
         {
@@ -100,10 +106,11 @@ export const Ratings = () => {
         <div className='container'>
             <div className="row">
                 <div className="col-12">
-                    <h1>Perfil del Oferente</h1>
+                    <h1>Calificar al Oferente</h1>
                     <hr />
                 </div>
             </div>
+
             <div className="row">
                 <div className="col-12">
                     <div className="card mb-3">
@@ -114,13 +121,7 @@ export const Ratings = () => {
                             </div>
                             <div className="col-md-8">
                                 <div className="card-body mt-3">
-                                    <h2 className='card-title'><strong> {data.first_name} {data.last_name} </strong> </h2>
-                                    <p className='card-text mt-4'><strong>Usuario:</strong> {data.username} </p>
-                                    <p><strong>Email:</strong> {data.email} </p>
-                                    <p><strong>Celular:</strong> {data.telephone} </p>
-                                    {data.is_supplier === true && <p><strong>Rol: </strong>Oferente/Proveedor</p>}
-                                    {data.is_finder === true && <p><strong>Rol: </strong>Buscador</p>}
-
+                                    <h2 className='card-title'><strong> {firstName} {lastName} </strong> </h2> 
                                     <form onSubmit={handleSubmit}>
                                         <div className="mb-3">
                                             <label htmlFor="rating" className="form-label">Calificación:</label>
@@ -165,6 +166,9 @@ export const Ratings = () => {
                     </div>
                 </div>
             </div>
+
+            <Rating_Oferente userId={userId}/>
+
         </div>
     )
 };
