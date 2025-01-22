@@ -4,18 +4,22 @@ import { PostCard } from './PostCard';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { CgMathPlus } from "react-icons/cg";
-import { useNavigate } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
 
 export const PostsList = () => {
     const navigate = useNavigate();
     const { token } = useAuth('state');
     const [user, setUser] = useState(null)
-    const [ {data, isLoading, errors}, doFetch ] = useFetch(`${import.meta.env.VITE_BASE_URL}api/posts/`, {
+    const location = useLocation();
+    const query = new URLSearchParams(location.search);
+    const serviceId = query.get('service');
+    const fetchUrl = serviceId ? `${import.meta.env.VITE_BASE_URL}api/posts/?service=${serviceId}` : `${import.meta.env.VITE_BASE_URL}api/posts/`;
+    const [ {data, isLoading, errors}, doFetch ] = useFetch(fetchUrl, {
         method: 'GET',
     });
     useEffect(() => {
         doFetch();
-    }, []);
+    }, [serviceId]);
 
     // Otro fetch para traer informacion del usuario logueado
     useEffect(() => {

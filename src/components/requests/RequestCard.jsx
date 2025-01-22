@@ -1,22 +1,91 @@
-/* eslint-disable react/prop-types */
+import React, { useState } from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
 
-export const RequestCard = ({ request }) => {
+export const RequestCard = ({ request, token, isSupplier ,setFilteredRequests, filteredRequests }) => {
+    const anchoCard = {
+        width: "auto",
+    };
 
-  const anchoCard = {
-    width: "auto",
-  };
+    const [show, setShow] = useState(false);
+    const [reason, setReason] = useState('');
+    const [status, setStatus] = useState('');
 
-  return (
-    <div className="card" style={anchoCard}>
-      <div className="card-body">
-        <h5 className="card-title"> {request.message} </h5>
-        <li className="list-group-item"> 
-          <h1><span className="badge text-bg-dark">{request.status}</span></h1>
-        </li>
-      </div>
-      <ul className="list-group list-group-flush">
-        <li className="list-group-item"> {request.post.description} </li>
-      </ul>
-    </div>
-  );
+    const handleShow = (newStatus) => {
+        setStatus(newStatus);
+        setShow(true);
+    };
+
+    const handleClose = () => setShow(false);
+
+    const handleAcceptOrReject = async () => {
+        try {
+            const response = await fetch(`${import.meta.env.VITE_BASE_URL}api/requests/${request.id}/`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Token ${token}`
+                },
+                body: JSON.stringify({ status, reason })
+            });
+            if (!response.ok) {
+                throw new Error('Error al actualizar la solicitud');
+            }
+            // Actualizar la lista de solicitudes después de la actualización
+            const updatedRequests = filteredRequests.map(r => 
+                r.id === request.id ? { ...r, status, reason } : r
+            );
+            setFilteredRequests(updatedRequests);
+        } catch (error) {
+            console.error(error);
+        }
+        handleClose();
+    };
+
+    return (
+        <div className="card" style={anchoCard}>
+            <div className="card-body">
+                <h5 className="card-title"> {request.message} </h5>
+                <li className="list-group-item"> 
+                    <h1><span className="badge text-bg-dark">{request.status}</span></h1>
+                </li>
+                {console.log(isSupplier)}
+                {isSupplier && request.status === 'pending' && (
+                <div className="btn-group mt-2"> 
+                    <button className="btn btn-success" onClick={() => handleShow('accepted')}>Aceptar</button> 
+                    <button className="btn btn-danger" onClick={() => handleShow('rejected')}>Rechazar</button>
+                </div>
+                )}
+            </div>
+            <ul className="list-group list-group-flush">
+                <li className="list-group-item"> {request.post.description} </li>
+            </ul>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{status === 'accepted' ? 'Aceptar Solicitud' : 'Rechazar Solicitud'}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="reason">
+                            <Form.Label>Razón</Form.Label>
+                            <Form.Control 
+                                type="text" 
+                                placeholder="Ingresa la razón" 
+                                value={reason} 
+                                onChange={(e) => setReason(e.target.value)} 
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cancelar
+                    </Button>
+                    <Button variant="primary" onClick={handleAcceptOrReject}>
+                        Enviar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </div>
+    );
 };

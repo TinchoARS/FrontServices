@@ -1,17 +1,25 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
+import useFetch from '../../hooks/fetchHook';
+import { useEffect,useState } from 'react';
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from 'react-router-dom';
 
-
+//se configuro el boton contratar servicio solo para el usuario buscador
 export const PostCard = ({ post }) => {
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar el modal
   const [message, setMessage] = useState(''); // Estado para el mensaje del usuario
   const { token } = useAuth('state');
   const navigate = useNavigate();
 
-  const anchoCard = { width: '100%' };
+  const [{ data: profileData, isLoading: isLoadingProfile, errors: errorsProfile }, doFetchProfile] = useFetch(`${import.meta.env.VITE_BASE_URL}api/profile/`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Token ${token}` },
+  });
 
+  const anchoCard = { width: '100%' };
+  useEffect(() => {
+    doFetchProfile();
+}, []);
   const handleClick = () => {
     setIsModalOpen(true); // Mostrar el modal al hacer clic
   };
@@ -56,6 +64,9 @@ export const PostCard = ({ post }) => {
       alert('Error en la solicitud', error);
     }
   };
+  if (isLoadingProfile) return <div className='container text-center'>Cargando...</div>;
+  if (errorsProfile) return <div className='container text-center'>Error al cargar los datos.</div>;
+  if (!profileData) return <div className='container text-center'>La Sesión ha expirado, vuelva a iniciar sesión.</div>;
 
   return (
     <div className="card mb-3" style={anchoCard}>
@@ -78,6 +89,7 @@ export const PostCard = ({ post }) => {
             <p className="card-text">
               <small className="text-muted">creado el {new Date(post.datecreated).toISOString().slice(0, 19).replace('T', ' ')}</small>
             </p>
+            {profileData.is_finder && (
             <button
               className="btn btn-outline-dark fw-bold w-100 mt-3"
               style={{ backgroundColor: '#66b3a5', color: 'white' }}
@@ -85,6 +97,7 @@ export const PostCard = ({ post }) => {
             >
               Contratar servicio
             </button>
+            )}
           </div>
         </div>
       </div>
