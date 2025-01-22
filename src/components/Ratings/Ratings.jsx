@@ -2,11 +2,15 @@
 import { useEffect, useState } from 'react';
 import useFetch from '../../hooks/fetchHook';
 import { useAuth } from '../../contexts/AuthContext';
+import { useLocation } from 'react-router-dom';
+import { Rating_Oferente } from './Ratings_Oferente';
 
 export const Ratings = () => {
     const { token } = useAuth('state');
-    const [formData, setFormData] = useState({ range: "", comment: "" })
-    const [{ data, isLoading, errors }, doFetch] = useFetch(`${import.meta.env.VITE_BASE_URL}api/profile/`, {
+    const [feedbackMessage, setFeedbackMessage] = useState('');
+    const location = useLocation();
+    const { firstName, lastName, id_oferente } = location.state || {}; // Extrae los datos del estado
+    const [{ data_user, isLoading_user, errors_user }, doFetch_user] = useFetch(`${import.meta.env.VITE_BASE_URL}api/profile/`, {
         method: 'GET',
         headers: {
             'Authorization': `Token ${token}`,
@@ -14,16 +18,31 @@ export const Ratings = () => {
     });
 
     useEffect(() => {
-        doFetch();
+        doFetch_user();
     }, []);
 
-    //CALIFICAR USER
-    const [{ data_R, isError_R, isLoading_R }, doFetch_R] = useFetch(
-        `${import.meta.env.VITE_BASE_URL}api/reading/`,
-        {
-            method: "POST",
+    const [formData, setFormData] = useState({ rating: "", comment: "", oferente_id: id_oferente || "", buscador_id: "",});
+
+    useEffect(() => {
+        if (data_user) {
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                buscador_id: data_user.id,
+            }));
         }
-    );
+    }, [data_user]);
+
+    // enviar calificacion al oferente
+    const [{ data, isLoading, errors }, doFetch] = useFetch(`${import.meta.env.VITE_BASE_URL}api/ratings/`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Token ${token}`,
+        },
+    });
+
+    const handleStarClick = (value) => {
+        setFormData({ ...formData, rating: value });
+    };
 
     const handleChange = (e) => {
         setFormData({
@@ -33,65 +52,77 @@ export const Ratings = () => {
     };
 
     const handleSubmit = (event) => {
+        event.preventDefault();
+        if (!formData.rating) {
+            alert('Por favor, selecciona una calificación.');
+            return;
+        }
         const isConfirmed = window.confirm('¿Estás seguro de que deseas calificar al oferente?');
         if (isConfirmed) {
-            alert('¡Has hecho clic en confirmar!');
-            event.preventDefault();
             const form = new FormData();
-            form.append("range", formData.range);
+            form.append("rating", formData.rating);
             form.append("comment", formData.comment);
+            form.append("buscador_id", formData.buscador_id); 
+            form.append("oferente_id", formData.oferente_id);
 
-            doFetch_R({ body: form });
+            doFetch({ body: form });
             console.log(form)
-            alert("Oferente calificado con exito");
-        } else {
-            alert('Operación cancelada');
+            setFeedbackMessage(data ? '¡Servicio calificado con éxito!' : 'Error al calificar el servicio.');
         }
     }
 
+    // Estilos para las estrellas de calificación
+    const starStyles = {
+        star: { cursor: 'pointer', fontSize: '24px', margin: '0 5px', color: 'gray' },
+        starSelected: { color: 'gold' },
+    };
 
-    if (isLoading) return <div className='container text-center'>Cargando...</div>;
-    if (errors) return <div className='container text-center'>Error al cargar datos del perfil.</div>;
-    if (!data) return <div className='container text-center'>La Sesion ha expirado, vuelva a iniciar sesion.</div>;
+    console.log("Datos antes de enviar:", {
+        rating: formData.rating,
+        comment: formData.comment,
+        buscador_id: formData.buscador_id, // falla al implementar 
+        oferente_id: formData.oferente_id,
+    });
 
-   
     return (
         <div className='container'>
             <div className="row">
                 <div className="col-12">
-                    <h1>Perfil del Oferente</h1>
+                    <h1>Calificar al Oferente</h1>
                     <hr />
                 </div>
             </div>
+
             <div className="row">
                 <div className="col-12">
                     <div className="card mb-3">
                         <div className="row g-0">
                             <div className="col-md-4">
                                 <img src='src/assets/userLogo.jpeg' className="card-img-top p-5" alt="foto de perfil" />
-                                {/* <img src={data.imagen} className="card-img-top" alt="foto de perfil" /> */}
                             </div>
                             <div className="col-md-8">
                                 <div className="card-body mt-3">
-                                    <h2 className='card-title'><strong> {data.first_name} {data.last_name} </strong> </h2>
-                                    <p className='card-text mt-4'><strong>Usuario:</strong> {data.username} </p>
-                                    <p><strong>Email:</strong> {data.email} </p>
-                                    <p><strong>Celular:</strong> {data.telephone} </p>
-                                    {data.is_supplier === true && <p><strong>Rol: </strong>Oferente/Proveedor</p>}
-                                    {data.is_finder === true && <p><strong>Rol: </strong>Buscador</p>}
-
+                                    <h2 className='card-title'><strong> {firstName} {lastName} </strong> </h2>
                                     <form onSubmit={handleSubmit}>
-                                        <label for="customRange3" class="form-label">Calificar</label>
-                                        <input type="range" class="form-range" id="range" name="range" min="0" max="5" step="0.5"
-                                            value={formData.first_name}
-                                            onChange={handleChange}
-                                            required>
-                                        </input>
                                         <div className="mb-3">
-                                            <label htmlFor="username" className="form-label">Comentario</label>
+                                            <label htmlFor="rating" className="form-label">Calificación:</label>
+                                            <div style={starStyles.container}>
+                                                {[1, 2, 3, 4, 5].map((star) => (
+                                                    <span
+                                                        key={star}
+                                                        onClick={() => handleStarClick(star)}
+                                                        style={formData.rating >= star ? { ...starStyles.star, ...starStyles.starSelected } : starStyles.star}
+                                                    >
+                                                        ★
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="mb-3">
+                                            <label htmlFor="comment" className="form-label">Comentario</label>
                                             <input type="text" className="form-control" id="comment" name="comment" defaultValue=""
                                                 required autoComplete="comentario"
-                                                value={formData.first_name}
+                                                value={formData.comment}
                                                 onChange={handleChange}
                                             />
                                         </div>
@@ -103,8 +134,7 @@ export const Ratings = () => {
                                         </button>
                                         <div className="mb-3 text-center">
                                             <div className="control">
-                                                {isError_R && <p>Error al cargar los datos.</p>}
-                                                {data_R && <p>Servicio calificado con exito!</p>}
+                                                <p>{feedbackMessage}</p>
                                             </div>
                                         </div>
                                     </form>
@@ -117,6 +147,9 @@ export const Ratings = () => {
                     </div>
                 </div>
             </div>
+
+            <Rating_Oferente id_oferente={id_oferente} />
+
         </div>
     )
 };
