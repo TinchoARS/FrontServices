@@ -10,10 +10,7 @@ export const Ratings = () => {
     const [feedbackMessage, setFeedbackMessage] = useState('');
     const location = useLocation();
     const { firstName, lastName, userId } = location.state || {}; // Extrae los datos del estado
-    const [formData, setFormData] = useState({ rating: "", comment: "" })
-
-    //obtener todas la calificaciones del oferente
-    const [{ data, isLoading, errors }, doFetch] = useFetch(`${import.meta.env.VITE_BASE_URL}api/ratings/`, { 
+    const [{ data_user, isLoading_user, errors_user }, doFetch_user] = useFetch(`${import.meta.env.VITE_BASE_URL}api/profile/`, {
         method: 'GET',
         headers: {
             'Authorization': `Token ${token}`,
@@ -21,40 +18,27 @@ export const Ratings = () => {
     });
 
     useEffect(() => {
-        doFetch();
+        doFetch_user();
     }, []);
 
+    const [formData, setFormData] = useState({ rating: "", comment: "", oferente_id: userId || "", buscador_id: "",});
 
-    /*Análisis de los Datos Necesarios
-    Calificar al oferente:
-    
-    * Requiere:
-    ID del usuario oferente: Identifica al proveedor del servicio.
-    ID del usuario buscador: Identifica a la persona que califica al oferente.
-    Rating: La puntuación que el buscador asigna al oferente (valor numérico de 1 a 5).
-    Comment: Un comentario breve del buscador.
-    Vista de calificación del oferente:
-    
-    * Debe mostrar:
-    ID del usuario oferente: Para asociar la calificación con el perfil del oferente.
-    ID del usuario buscador: Para identificar quién realizó la calificación.
-    Ratings: La puntuación otorgada.
-    Comment: El comentario proporcionado.
-    Tabla de calificaciones:
-    
-    * Diseñada para almacenar:
-    ID del usuario oferente: El calificado.
-    ID del usuario buscador: El que califica.
-    Rating: Puntuación.
-    Comment: Comentario. */
+    useEffect(() => {
+        if (data_user) {
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                buscador_id: data_user.id,
+            }));
+        }
+    }, [data_user]);
 
     // enviar calificacion al oferente
-    const [{ data_R, isError_R, isLoading_R }, doFetch_R] = useFetch(
-        `${import.meta.env.VITE_BASE_URL}api/ratings/`,
-        {
-            method: "POST",
-        }
-    );
+    const [{ data, isLoading, errors }, doFetch] = useFetch(`${import.meta.env.VITE_BASE_URL}api/ratings/`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Token ${token}`,
+        },
+    });
 
     const handleStarClick = (value) => {
         setFormData({ ...formData, rating: value });
@@ -78,22 +62,13 @@ export const Ratings = () => {
             const form = new FormData();
             form.append("rating", formData.rating);
             form.append("comment", formData.comment);
+            form.append("buscador_id", formData.buscador_id); 
+            form.append("oferente_id", formData.oferente_id);
 
-            doFetch_R({ body: form });
+            doFetch({ body: form });
             console.log(form)
-            setFeedbackMessage(data_R ? '¡Servicio calificado con éxito!' : 'Error al calificar el servicio.');
+            setFeedbackMessage(data ? '¡Servicio calificado con éxito!' : 'Error al calificar el servicio.');
         }
-    }
-
-
-    if (isLoading) return <div className='container text-center'>Cargando...</div>;
-    if (errors) return <div className='container text-center'>Error al cargar datos del perfil.</div>;
-    if (!data) return <div className='container text-center'>La Sesion ha expirado, vuelva a iniciar sesion.</div>;
-
-    if (data_R) {
-        setFeedbackMessage('¡Servicio calificado con éxito!');
-    } else if (isError_R) {
-        setFeedbackMessage('Error al cargar los datos.');
     }
 
     // Estilos para las estrellas de calificación
@@ -101,6 +76,13 @@ export const Ratings = () => {
         star: { cursor: 'pointer', fontSize: '24px', margin: '0 5px', color: 'gray' },
         starSelected: { color: 'gold' },
     };
+
+    console.log("Datos antes de enviar:", {
+        rating: formData.rating,
+        comment: formData.comment,
+        buscador_id: formData.buscador_id, // falla al implementar 
+        oferente_id: formData.oferente_id,
+    });
 
     return (
         <div className='container'>
@@ -117,11 +99,10 @@ export const Ratings = () => {
                         <div className="row g-0">
                             <div className="col-md-4">
                                 <img src='src/assets/userLogo.jpeg' className="card-img-top p-5" alt="foto de perfil" />
-                                {/* <img src={data.imagen} className="card-img-top" alt="foto de perfil" /> */}
                             </div>
                             <div className="col-md-8">
                                 <div className="card-body mt-3">
-                                    <h2 className='card-title'><strong> {firstName} {lastName} </strong> </h2> 
+                                    <h2 className='card-title'><strong> {firstName} {lastName} </strong> </h2>
                                     <form onSubmit={handleSubmit}>
                                         <div className="mb-3">
                                             <label htmlFor="rating" className="form-label">Calificación:</label>
@@ -167,7 +148,7 @@ export const Ratings = () => {
                 </div>
             </div>
 
-            <Rating_Oferente userId={userId}/>
+            <Rating_Oferente userId={userId} />
 
         </div>
     )
