@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import useFetch from '../../hooks/fetchHook';
 import { useEffect, useState } from 'react';
 import { useAuth } from "../../contexts/AuthContext";

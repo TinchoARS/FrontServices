@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
+import { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 export const RequestCard = ({ request, token, isSupplier ,setFilteredRequests, filteredRequests }) => {
@@ -46,9 +47,10 @@ export const RequestCard = ({ request, token, isSupplier ,setFilteredRequests, f
             <div className="card-body">
                 <h5 className="card-title"> {request.message} </h5>
                 <li className="list-group-item"> 
-                    <h1><span className="badge text-bg-dark">{request.status}</span></h1>
+                    {request.status === 'accepted' ? <h1><span className="badge bg-success">{request.status}</span></h1> : null}
+                    {request.status === 'rejected' ? <h1><span className="badge bg-danger">{request.status}</span></h1> : null}
+                    {request.status === 'pending' ? <h1><span className="badge bg-warning">{request.status}</span></h1> : null}
                 </li>
-                {console.log(isSupplier)}
                 {isSupplier && request.status === 'pending' && (
                 <div className="btn-group mt-2"> 
                     <button className="btn btn-success" onClick={() => handleShow('accepted')}>Aceptar</button> 

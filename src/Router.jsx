@@ -13,6 +13,7 @@ import { ProtectedRoute } from "./security/ProtectedRouter";
 import {Ratings} from "./components/ratings/Ratings";
 import { FormServiceAdd } from "./components/services/FormServiceAdd";
 import { FormPostAdd } from "./components/posts/FormPostAdd";
+import { SavedList } from "./components/saved/SavedList";
 
 export const Router = createBrowserRouter([
     {
@@ -129,6 +130,19 @@ export const Router = createBrowserRouter([
                         path: "edit",
                         // element: <UserEdit />
                     }
+                ]
+            },
+            {
+                path: "/saved",
+                children: [
+                    {
+                        index: true,
+                        element: (
+                            <ProtectedRoute>
+                                <SavedList />
+                            </ProtectedRoute>
+                        ),
+                    },
                 ]
             }
         ]
