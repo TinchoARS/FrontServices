@@ -16,9 +16,20 @@ export const PostCard = ({ post }) => {
     setIsModalOpen(true); // Mostrar el modal al hacer clic
   };
 
+  const handleEditarPerfil = () => {
+    navigate(`/ratings`, {
+      state: {
+        firstName: post.user.first_name,
+        lastName: post.user.last_name,
+        userId: post.user.id, // id del oferente para traer sus ratings
+      },
+    });
+  };
+
+
   const handleConfirm = async () => {
     try {
-        console.log(post.id)
+      console.log(post.id)
       // Aquí realizamos el POST con el mensaje del usuario y el ID del post
       const response = await fetch(`${import.meta.env.VITE_BASE_URL}api/requests/`, {
         method: 'POST',
@@ -37,24 +48,30 @@ export const PostCard = ({ post }) => {
         // Aquí puedes actualizar el estado o recargar los datos de la página
         // por ejemplo, actualizando el estado del post, o realizando un fetch nuevamente
         setIsModalOpen(false); // Cerrar el modal
-        navigate('/requests');  
+        navigate('/requests');
       } else {
-          alert('Hubo un error al registrar la solicitud');
-        }
-      } catch (error) {
-        alert('Error en la solicitud', error);
+        alert('Hubo un error al registrar la solicitud');
       }
+    } catch (error) {
+      alert('Error en la solicitud', error);
+    }
   };
 
   return (
     <div className="card mb-3" style={anchoCard}>
       <div className="row g-0">
         <div className="col-md-1">
-          <img src='src/assets/userLogo.jpeg' alt="User" className="img-fluid rounded-start p-2" width={'100px'}/>
+          <img src='src/assets/userLogo.jpeg' alt="User" className="img-fluid rounded-start p-2" width={'100px'} />
         </div>
         <div className="col-md-11">
           <div className="card-body">
             <h5 className="card-title">{post.user.first_name} {post.user.last_name}</h5>
+            <button
+              className="btn btn-dark fw-bold me-3 mt-4"
+              onClick={handleEditarPerfil}
+            >
+              Calificacion
+            </button>
             <p className="card-text">{post.description}</p>
             <span className="badge text-bg-dark">{post.service.title}</span>
             <p className="card-text">Disponibilidad: {post.disponibility}</p>
