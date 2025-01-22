@@ -42,7 +42,7 @@ export const Rating_Oferente = ({userId}) => {
                 </div>
             </div>
             {filteredRatings.length === 0 ? (
-                <div className="alert alert-warning text-center" role='alert'>No hay servicios disponibles.</div>
+                <div className="alert alert-warning text-center" role='alert'>No hay calificaciones disponibles.</div>
             ) : (
                 filteredRatings.map((rating, index) => (
                     <div className="row" key={index}>
