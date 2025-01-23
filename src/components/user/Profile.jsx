@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react';
 import useFetch from '../../hooks/fetchHook';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { Rating_Oferente } from '../Ratings/Ratings_Oferente';
 
 export const Profile = () => {
     const { token } = useAuth('state');
     const { logout } = useAuth("actions");
     const navigate = useNavigate();
     const [isDeleting, setIsDeleting] = useState(false);
-    const [ {data, isLoading, errors}, doFetch ] = useFetch(`${import.meta.env.VITE_BASE_URL}api/profile/`, {
+    const [{ data, isLoading, errors }, doFetch] = useFetch(`${import.meta.env.VITE_BASE_URL}api/profile/`, {
         method: 'GET',
         headers: {
             'Authorization': `Token ${token}`,
@@ -85,8 +86,8 @@ export const Profile = () => {
                                     <p className='card-text mt-4'><strong>Usuario:</strong> {data.username} </p>
                                     <p><strong>Email:</strong> {data.email} </p>
                                     <p><strong>Celular:</strong> {data.telephone} </p>
-                                    { data.is_supplier === true && <p><strong>Rol: </strong>Oferente/Proveedor</p> }
-                                    { data.is_finder === true && <p><strong>Rol: </strong>Buscador</p> }
+                                    {data.is_supplier === true && <p><strong>Rol: </strong>Oferente/Proveedor</p>}
+                                    {data.is_finder === true && <p><strong>Rol: </strong>Buscador</p>}
                                     <button
                                         className="btn btn-dark fw-bold me-3 mt-4"
                                         onClick={handleEditarPerfil}
@@ -98,16 +99,19 @@ export const Profile = () => {
                                         onClick={handleDeleteProfile}
                                         disabled={isDeleting}
                                     >
-                                        {isDeleting ? 'Eliminando...' : 'Eliminar Cuenta'}
+                                        {isDeleting ? 'Eliminando....' : 'Eliminar Cuenta'}
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        
-                        
-                    </div>                
+
+
+                    </div>
                 </div>
             </div>
+            {data.is_supplier === true && <Rating_Oferente id_oferente={data.id} />}
+            
+
         </div>
     )
 };
