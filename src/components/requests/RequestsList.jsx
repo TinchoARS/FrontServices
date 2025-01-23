@@ -75,6 +75,7 @@ export const RequestsList = () => {
                         request={request}
                         token={token} //provisorio,cambiar a la extraccion por profile 
                         isSupplier={profileData.is_supplier}
+                        profileId={profileData.id}
                         setFilteredRequests={setFilteredRequests}
                         filteredRequests={filteredRequests}
                         /> 
@@ -90,6 +91,7 @@ export const RequestsList = () => {
                  request={request}
                  token={token}//provisorio,cambiar a la extraccion por profile 
                  isSupplier={profileData.is_supplier}
+                 profileId={profileData.id}
                  setFilteredRequests={setFilteredRequests}
                  filteredRequests={filteredRequests}
                  /> 
