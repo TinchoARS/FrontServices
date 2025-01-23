@@ -22,6 +22,9 @@ export const PostsList = () => {
     }, [serviceId]);
 
     // Otro fetch para traer informacion del usuario logueado
+    // hola soy goku, y si hacemos otro fetch pero no en un useefect si no en el mismo que el de arriba 
+    //total ninguno depende del otro en sentido de llamados #discutir 
+    //hace multiples llamadas a fetchuser por que esta dentro del if data
     useEffect(() => {
         if (data) {
             const fetchUser = async () => {
