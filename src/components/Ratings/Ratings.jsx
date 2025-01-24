@@ -1,16 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useFetch from '../../hooks/fetchHook';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLocation } from 'react-router-dom';
-import { Rating_Oferente } from './Ratings_Oferente';
 
 export const Ratings = () => {
     const { token } = useAuth('state');
-    const [feedbackMessage, setFeedbackMessage] = useState('');
     const location = useLocation();
-    const { firstName, lastName, id_oferente } = location.state || {}; // Extrae los datos del estado
-    const [{ data_user, isLoading_user, errors_user }, doFetch_user] = useFetch(`${import.meta.env.VITE_BASE_URL}api/profile/`, {
+    const { firstName, lastName, id_oferente } = location.state || {};
+
+    // Fetch para obtener las calificaciones del oferente
+    const ratings_url = `${import.meta.env.VITE_BASE_URL}api/ratings/?user=${id_oferente}`;
+    const [{ data: data_ratings, isLoading: isLoading_ratings, error: error_ratings }, doFetch_ratings] = useFetch(ratings_url, {
         method: 'GET',
         headers: {
             'Authorization': `Token ${token}`,
@@ -18,77 +18,30 @@ export const Ratings = () => {
     });
 
     useEffect(() => {
-        doFetch_user();
+        doFetch_ratings();
     }, []);
 
-    const [formData, setFormData] = useState({ rating: "", comment: "", oferente_id: id_oferente || "", buscador_id: "",});
+    // Función para renderizar las estrellas
+    const renderStars = (stars) => {
+        const totalStars = 5;
+        const starStyle = { fontSize: '30px', color: 'gray', marginRight: '5px' };
 
-    useEffect(() => {
-        if (data_user) {
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                buscador_id: data_user.id,
-            }));
-        }
-    }, [data_user]);
-
-    // enviar calificacion al oferente
-    const [{ data, isLoading, errors }, doFetch] = useFetch(`${import.meta.env.VITE_BASE_URL}api/ratings/`, {
-        method: 'POST',
-        headers: {
-            'Authorization': `Token ${token}`,
-        },
-    });
-
-    const handleStarClick = (value) => {
-        setFormData({ ...formData, rating: value });
+        return (
+            <div>
+                {[...Array(totalStars)].map((star, index) => (
+                    <span key={index} style={index < stars ? { ...starStyle, color: 'gold' } : starStyle}>
+                        ★
+                    </span>
+                ))}
+            </div>
+        );
     };
-
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (!formData.rating) {
-            alert('Por favor, selecciona una calificación.');
-            return;
-        }
-        const isConfirmed = window.confirm('¿Estás seguro de que deseas calificar al oferente?');
-        if (isConfirmed) {
-            const form = new FormData();
-            form.append("rating", formData.rating);
-            form.append("comment", formData.comment);
-            form.append("buscador_id", formData.buscador_id); 
-            form.append("oferente_id", formData.oferente_id);
-
-            doFetch({ body: form });
-            console.log(form)
-            setFeedbackMessage(data ? '¡Servicio calificado con éxito!' : 'Error al calificar el servicio.');
-        }
-    }
-
-    // Estilos para las estrellas de calificación
-    const starStyles = {
-        star: { cursor: 'pointer', fontSize: '24px', margin: '0 5px', color: 'gray' },
-        starSelected: { color: 'gold' },
-    };
-
-    console.log("Datos antes de enviar:", {
-        rating: formData.rating,
-        comment: formData.comment,
-        buscador_id: formData.buscador_id, // falla al implementar 
-        oferente_id: formData.oferente_id,
-    });
 
     return (
         <div className='container'>
             <div className="row">
                 <div className="col-12">
-                    <h1>Calificar al Oferente</h1>
+                    <h1>Perfil del Oferente</h1>
                     <hr />
                 </div>
             </div>
@@ -102,54 +55,33 @@ export const Ratings = () => {
                             </div>
                             <div className="col-md-8">
                                 <div className="card-body mt-3">
-                                    <h2 className='card-title'><strong> {firstName} {lastName} </strong> </h2>
-                                    <form onSubmit={handleSubmit}>
-                                        <div className="mb-3">
-                                            <label htmlFor="rating" className="form-label">Calificación:</label>
-                                            <div style={starStyles.container}>
-                                                {[1, 2, 3, 4, 5].map((star) => (
-                                                    <span
-                                                        key={star}
-                                                        onClick={() => handleStarClick(star)}
-                                                        style={formData.rating >= star ? { ...starStyles.star, ...starStyles.starSelected } : starStyles.star}
-                                                    >
-                                                        ★
-                                                    </span>
+                                    <h1 className='card-title'><strong> {firstName} {lastName} </strong> </h1>
+                                    {/* Mostrar las calificaciones del oferente */}
+                                    {isLoading_ratings ? (
+                                        <p>Cargando calificaciones...</p>
+                                    ) : error_ratings ? (
+                                        <p>Error al cargar las calificaciones.</p>
+                                    ) : (
+                                        data_ratings && data_ratings.length > 0 ? (
+                                            <div>
+                                                <h3>Calificaciones</h3>
+                                                {data_ratings.map((rating) => (
+                                                    <div key={rating.id} className="mb-3">
+                                                        {renderStars(rating.stars)}
+                                                        <p>{rating.comment}</p>
+                                                    </div>
                                                 ))}
                                             </div>
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="comment" className="form-label">Comentario</label>
-                                            <input type="text" className="form-control" id="comment" name="comment" defaultValue=""
-                                                required autoComplete="comentario"
-                                                value={formData.comment}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                        <button
-                                            type='submit'
-                                            className="btn btn-dark fw-bold me-3 mt-4"
-                                        >
-                                            Calificar
-                                        </button>
-                                        <div className="mb-3 text-center">
-                                            <div className="control">
-                                                <p>{feedbackMessage}</p>
-                                            </div>
-                                        </div>
-                                    </form>
-
+                                        ) : (
+                                            <p>No hay calificaciones disponibles.</p>
+                                        )
+                                    )}
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
-
-            <Rating_Oferente id_oferente={id_oferente} />
-
         </div>
-    )
+    );
 };

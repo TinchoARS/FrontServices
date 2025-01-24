@@ -10,15 +10,15 @@ export const StatusRequestCard = ({ statusrequest }) => {
   return (
     <div className="card" style={anchoCard}>
       <div className="card-body">
-        <h5 className="card-title"> {statusrequest.status} </h5>
+        <h5 className="card-title"> comentario: {statusrequest.comment}</h5>
         <li className="list-group-item"> 
-          <span className="badge text-bg-dark">{statusrequest.comment}</span>
+          <span className="badge bg-warning text-bg-dark">estado: {statusrequest.status}</span>
         </li>
       </div>
       <ul className="list-group list-group-flush">
         <li className="list-group-item"> {statusrequest.dateupdated} </li>
-        <li className="list-group-item"> {statusrequest.id} </li>
-        <li className="list-group-item"> {statusrequest.user.username} </li>
+        <li className="list-group-item"> id del estado del servicio: {statusrequest.id} </li>
+        <li className="list-group-item"> a cargo del oferente: <strong>{statusrequest.user.username}</strong> </li>
       </ul>
       {statusrequest.status === "finalizado" &&(
       <div className="card-body">

@@ -26,7 +26,7 @@ export const PostCard = ({ post }) => {
   };
 
   const handleEditarPerfil = () => {
-    navigate(`/ratings`, {
+    navigate(`/ratings`, { //interesante uso de state aunque no tiene persistencia
       state: {
         firstName: post.user.first_name,
         lastName: post.user.last_name,
