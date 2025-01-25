@@ -32,7 +32,7 @@ export const ServiceDetails = () => {
     };
 
     const viewPosts = () => {
-        navigate(`/posts`);
+        navigate(`/posts?service=${idService}`);
     };
 
     return (

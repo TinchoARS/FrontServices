@@ -20,19 +20,19 @@ export const Home = () => {
         
         <div className="creators-container">
           <div className="creator-box">
-            <h3>Creador 1</h3>
+            <h3>Cristian Villa</h3>
             <p>Desarrollador Backend</p>
           </div>
           <div className="creator-box">
-            <h3>Creador 2</h3>
+            <h3>Kevin Serrano</h3>
             <p>Desarrollador Backend</p>
           </div>
           <div className="creator-box">
-            <h3>Creador 3</h3>
+            <h3>Martín Fradejas</h3>
             <p>Desarrollador Frontend</p>
           </div>
           <div className="creator-box">
-            <h3>Creador 4</h3>
+            <h3>José Colque</h3>
             <p>Desarrollador Frontend</p>
           </div>
         </div>

@@ -10,6 +10,11 @@ import { RequestsList } from "./components/requests/RequestsList";
 import { PostsList } from "./components/posts/PostsList";
 import { Profile } from "./components/user/Profile";
 import { ProtectedRoute } from "./security/ProtectedRouter";
+import { Ratings } from "./components/Ratings/Ratings";
+import { FormServiceAdd } from "./components/services/FormServiceAdd";
+import { FormPostAdd } from "./components/posts/FormPostAdd";
+import { SavedList } from "./components/saved/SavedList";
+import { StatusRequest } from "./components/statusservices/StatusRequest";
 
 export const Router = createBrowserRouter([
     {
@@ -44,7 +49,7 @@ export const Router = createBrowserRouter([
                     },
                     {
                         path: "addService",
-                        // element: <AddServices />
+                        element: <FormServiceAdd />
                     }
                 ],
             },
@@ -61,13 +66,21 @@ export const Router = createBrowserRouter([
                     },
                     {
                         path: ":idPost",
-                         //element: <RequestsDetails />
+                        //element: <RequestsDetails />
                     },
                     {
                         path: "addRequest",
                         // element: <AddRequests />
                     }
                 ],
+            },
+            {
+                path: "/statusservices",
+                element: (
+                    <ProtectedRoute>
+                        <StatusRequest />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "/posts",
@@ -83,6 +96,23 @@ export const Router = createBrowserRouter([
                     {
                         path: ":idPost",
                         // element: <PostsDetails />
+                    },
+                    {
+                        path: "addPost",
+                        element: <FormPostAdd />
+                    }
+                ],
+            },
+            {   /* ratings */
+                path: "/ratings",
+                children: [
+                    {
+                        index: true,
+                        element: (
+                            <ProtectedRoute>
+                                <Ratings />
+                            </ProtectedRoute>
+                        )
                     }
                 ],
             },
@@ -108,7 +138,20 @@ export const Router = createBrowserRouter([
                     {
                         path: "edit",
                         // element: <UserEdit />
-                    }
+                    },
+                ]
+            },
+            {
+                path: "/saved",
+                children: [
+                    {
+                        index: true,
+                        element: (
+                            <ProtectedRoute>
+                                <SavedList />
+                            </ProtectedRoute>
+                        ),
+                    },
                 ]
             }
         ]
