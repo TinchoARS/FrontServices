@@ -76,11 +76,11 @@ export const Router = createBrowserRouter([
             },
             {
                 path: "/statusservices",
-                        element: (
-                            <ProtectedRoute>
-                                <StatusRequest />
-                            </ProtectedRoute>
-                        ),
+                element: (
+                    <ProtectedRoute>
+                        <StatusRequest />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "/posts",
@@ -138,7 +138,7 @@ export const Router = createBrowserRouter([
                     {
                         path: "edit",
                         // element: <UserEdit />
-                    }
+                    },
                 ]
             },
             {
