@@ -12,3 +12,7 @@ body {
     min-height: 100vh;
     background-color:#b5dbff; /* Ajusta según la altura de tu navbar */
 }
+
+.main-content.without-sidebar {
+    margin-left: 0;
+}

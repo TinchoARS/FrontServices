@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import useFetch from "../../hooks/fetchHook";
 import { useAuth } from "../../contexts/AuthContext";
+import logo from '../../assets/logo.png'
+import background from '../../assets/background3.png'
 
 export const Login = () => {
     const [triggerFetch, setTriggerFetch] = useState(false);
@@ -41,37 +43,72 @@ export const Login = () => {
 
 
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col-4"></div>
+        <div className="container-sm">
+            <div className="row-left">
                 <div className="col-12 col-md-4">
-                    <h2 className="text-center mb-5">Iniciar Sesion</h2>
+                    <div className="text-center mb-4">
+                        <img src={logo} alt="logo Servify" className="img-fluid" style={{ maxWidth: '150px' }} />
+                    </div>
+                    <h2 className="text-center mb-4">Iniciar Sesión</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
-                        <label htmlFor="username" className="form-label">Usuario</label>
-                        <input type="text" className="form-control" id="username" name="username" defaultValue="" onChange={handleChange} required autoComplete="username"/>
+                            <label htmlFor="username" className="form-label">Usuario</label>
+                            <input 
+                                type="user" 
+                                className="form-control" 
+                                id="username" 
+                                name="username" 
+                                onChange={handleChange} 
+                                required 
+                                autoComplete="username"
+                            />
                         </div>
-                        <div className="mb-3">
-                        <label htmlFor="password" className="form-label">Contraseña</label>
-                        <input type="password" className="form-control" id="password" name="password" defaultValue="" onChange={handleChange} required autoComplete="new-password"/>
+                        <div className="mb-4">
+                            <label htmlFor="password" className="form-label">Contraseña</label>
+                            <input 
+                                type="password" 
+                                className="form-control" 
+                                id="password" 
+                                name="password" 
+                                onChange={handleChange} 
+                                required 
+                                autoComplete="current-password"
+                            />
                         </div>
-                        <div className="mb-3">
-                        <p >
-                            Si no tienes cuenta, crea una <span> <a href="/register">aqui</a></span>
-                        </p>
-                        </div>
-                        <div className="mb-3 text-center">
-                        <div className="control">
-                            <button type="submit" className="btn btn-primary text-center">Ingresar</button>
+                        <div className="text-center mb-4">
+                            <button type="submit" className="btn btn-primary w-100">
+                                Ingresar
+                            </button>
                             {isLoading && triggerFetch && (
-                                <p>Cargando...</p>
+                                <p className="mt-3">Cargando...</p>
                             )}
-                            {isError && <p>Error al cargar los datos.</p>}
+                            {isError && <p className="text-danger mt-3">Error al cargar los datos.</p>}
                         </div>
+                        <hr style={{ backgroundColor: '#dee2e6', opacity: '0.3' }} />
+                        <div className="text-center mt-4">
+                            <p className="text-muted mb-3">
+                                Si no tienes cuenta
+                            </p>
+                            <a href="/register" className="btn btn-secondary w-100">
+                                Crear cuenta
+                            </a>
                         </div>
                     </form>
                 </div>
-                <div className="col-4"></div>
+            </div>
+            <div className="row-right">
+                <img 
+                    src={background} 
+                    alt="Imagen decorativa" 
+                    style={{ 
+                        position: 'fixed',
+                        top: 0,
+                        right: 0,
+                        width: '50%',
+                        height: '100vh',
+                        objectFit: 'cover'
+                    }} 
+                />
             </div>
         </div>
     );

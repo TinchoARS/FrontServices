@@ -2,6 +2,8 @@
 import { useState } from "react";
 import useFetch from "../../hooks/fetchHook";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.png";
+import background from "../../assets/background3.png";
 
 export const Register = () => {
     const navigate = useNavigate();
@@ -71,156 +73,147 @@ export const Register = () => {
 
 
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col-md-3"></div>
-
-                <div className="col-12 col-md-6">
-                <h2 className="text-center mb-5">Registrarse</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                    <label htmlFor="first_name" className="form-label">
-                        Nombre
-                    </label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="first_name"
-                        name="first_name"
-                        value={formData.first_name}
-                        onChange={handleChange}
-                        required
-                    />
+        <div className="container-sm">
+            <div className="row-left">
+                <div className="col-12 col-md-4">
+                    <div className="text-center mb-4">
+                        <img src={logo} alt="logo Servify" className="img-fluid" style={{ maxWidth: '150px' }} />
                     </div>
-                    <div className="mb-3">
-                    <label htmlFor="last_name" className="form-label">
-                        Apellido
-                    </label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="last_name"
-                        name="last_name"
-                        value={formData.last_name}
-                        onChange={handleChange}
-                        required
-                    />
-                    </div>
-                    <div className="mb-3">
-                    <label htmlFor="username" className="form-label">
-                        Nombre de usuario
-                    </label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="username"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        required
-                        autoComplete="new-username"
-                    />
-                    </div>
-                    <div className="mb-3">
-                    <label htmlFor="email" className="form-label">
-                        Correo electronico
-                    </label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        autoComplete="new-email"
-                    />
-                    </div>
-                    <div className="mb-3">
-                    <label htmlFor="telephone" className="form-label">
-                        Celular
-                    </label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        id="telephone"
-                        name="telephone"
-                        value={formData.telephone}
-                        onChange={handleChange}
-                        required
-                    />
-                    </div>
-                    {/* <div className="mb-3">
-                    <label htmlFor="imagen" className="form-label">
-                        Foto de perfil
-                    </label>
-                    <div className="control has-icons-left">
-                        <input
-                        className="form-control"
-                        type="file"
-                        id="imagen"
-                        name="imagen"
-                        onChange={handleFileChange}
-                        />
-                    </div>
-                    </div> */}
-                    <div className="mb-3">
-                    <label htmlFor="password" className="form-label">
-                        Contraseña
-                    </label>
-                    <input
-                        type="password"
-                        className="form-control"
-                        id="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                        autoComplete="new-password"
-                    />
-                    </div>
-                    <label className="form-label">Elige tu rol:</label>
-                    <div>
-                        <input
-                            type="radio"
-                            id="is_supplier"
-                            name="role"
-                            value="is_supplier"
-                            checked={formData.is_supplier === 1}
-                            onChange={handleRoleChange}
-                            required
-                        />
-                        <label htmlFor="is_supplier">Proveedor</label>
-                    </div>
-                    <div>
-                        <input
-                            type="radio"
-                            id="is_finder"
-                            name="role"
-                            value="is_finder"
-                            checked={formData.is_finder === 1}
-                            onChange={handleRoleChange}
-                            required
-                        />
-                        <label htmlFor="is_finder">Buscador</label>
-                    </div>
-                    <div className="mb-3 text-center">
-                    <div className="control">
-                        <button type="submit" className="btn btn-primary text-center">
-                        Registrarme
-                        </button>
-                    </div>
-                    </div>
-                    <div className="mb-3 text-center">
-                    <div className="control">
-                        {isError && <p>Error al cargar los datos.</p>}
-                        {data && <p>Usuario registrado con exito</p>}
-                    </div>
-                    </div>
-                </form>
+                    <h2 className="text-center mb-4">Registrarse</h2>
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            <label htmlFor="first_name" className="form-label">Nombre</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="first_name"
+                                name="first_name"
+                                value={formData.first_name}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="last_name" className="form-label">Apellido</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="last_name"
+                                name="last_name"
+                                value={formData.last_name}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="username" className="form-label">Nombre de usuario</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="username"
+                                name="username"
+                                value={formData.username}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="email" className="form-label">Correo electrónico</label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                id="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="telephone" className="form-label">Celular</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                id="telephone"
+                                name="telephone"
+                                value={formData.telephone}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="password" className="form-label">Contraseña</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="form-label d-block">Elige tu rol:</label>
+                            <div className="form-check form-check-inline">
+                                <input
+                                    className="form-check-input"
+                                    type="radio"
+                                    id="is_supplier"
+                                    name="role"
+                                    value="is_supplier"
+                                    checked={formData.is_supplier === 1}
+                                    onChange={handleRoleChange}
+                                    required
+                                />
+                                <label className="form-check-label" htmlFor="is_supplier">Proveedor</label>
+                            </div>
+                            <div className="form-check form-check-inline">
+                                <input
+                                    className="form-check-input"
+                                    type="radio"
+                                    id="is_finder"
+                                    name="role"
+                                    value="is_finder"
+                                    checked={formData.is_finder === 1}
+                                    onChange={handleRoleChange}
+                                    required
+                                />
+                                <label className="form-check-label" htmlFor="is_finder">Buscador</label>
+                            </div>
+                        </div>
+                        <div className="text-center mb-4">
+                            <button type="submit" className="btn btn-primary w-100">
+                                Registrarme
+                            </button>
+                            {isLoading && <p className="mt-3">Cargando...</p>}
+                            {isError && <p className="text-danger mt-3">Error al cargar los datos.</p>}
+                        </div>
+                        <hr style={{ backgroundColor: '#dee2e6', opacity: '0.3' }} />
+                        <div className="text-center mt-4">
+                            <p className="text-muted mb-3">
+                                ¿Ya tienes una cuenta?
+                            </p>
+                            <a href="/login" className="btn btn-secondary w-100">
+                                Iniciar Sesión
+                            </a>
+                        </div>
+                    </form>
                 </div>
-
-                <div className="col-md-3"></div>
+            </div>
+            <div className="row-right">
+                <img 
+                    src={background} 
+                    alt="Imagen decorativa" 
+                    style={{ 
+                        position: 'fixed',
+                        top: 0,
+                        right: 0,
+                        width: '50%',
+                        height: '100vh',
+                        objectFit: 'cover'
+                    }} 
+                />
             </div>
         </div>
     );
