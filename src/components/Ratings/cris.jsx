@@ -1,12 +1,19 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react-hooks/exhaustive-deps */
+/*
 import { useEffect } from 'react';
 import useFetch from '../../hooks/fetchHook';
 import { useAuth } from '../../contexts/AuthContext';
+import { useLocation } from 'react-router-dom';
+import { Rating_Oferente } from './Ratings_Oferente';
 
-export const Rating_Oferente = ({ id_oferente }) => {
+export const Ratings = () => {
     const { token } = useAuth('state');
-    const [{ data, isLoading, errors }, doFetch] = useFetch(`${import.meta.env.VITE_BASE_URL}api/ratings/?user=${id_oferente}`, {
+    const location = useLocation();
+    const { firstName, lastName, username, email, telephone, id_oferente, state_oferente,} = location.state || {};
+    console.log("state: ", state_oferente);
+
+    // Fetch para obtener las calificaciones del oferente
+    const ratings_url = `${import.meta.env.VITE_BASE_URL}api/ratings/?user=${id_oferente}`;
+    const [{ data: data_ratings, isLoading: isLoading_ratings, error: error_ratings }, doFetch_ratings] = useFetch(ratings_url, {
         method: 'GET',
         headers: {
             'Authorization': `Token ${token}`,
@@ -14,16 +21,10 @@ export const Rating_Oferente = ({ id_oferente }) => {
     });
 
     useEffect(() => {
-        doFetch();
+        doFetch_ratings();
     }, []);
 
-
-    if (isLoading) return <div className='container text-center'>Cargando...</div>;
-    if (errors) return <div className='container text-center'>Error al cargar datos del perfil.</div>;
-    if (!data) return <div className='container text-center'>La Sesion ha expirado, vuelva a iniciar sesion.</div>;
-
-
-  
+    // Función para renderizar las estrellas
     const renderStars = (stars) => {
         const totalStars = 5;
         const starStyle = { fontSize: '30px', color: 'gray', marginRight: '5px' };
@@ -34,7 +35,7 @@ export const Rating_Oferente = ({ id_oferente }) => {
                     <span key={index} style={index < stars ? { ...starStyle, color: 'gold' } : starStyle}>
                         ★
                     </span>
-                ))}
+                ))} 
             </div>
         );
     };
@@ -43,7 +44,7 @@ export const Rating_Oferente = ({ id_oferente }) => {
         <div className='container'>
             <div className="row">
                 <div className="col-12">
-                    <h1>Calificaciones</h1>
+                    <h1>Perfil del Oferente</h1>
                     <hr />
                 </div>
             </div>
@@ -52,22 +53,29 @@ export const Rating_Oferente = ({ id_oferente }) => {
                 <div className="col-12">
                     <div className="card mb-3">
                         <div className="row g-0">
+                            <div className="col-md-4">
+                                <img src='src/assets/userLogo.jpeg' className="card-img-top p-5" alt="foto de perfil" />
+                            </div>
                             <div className="col-md-8">
                                 <div className="card-body mt-3">
-                                    {/* Mostrar las calificaciones del oferente */}
-                                    {isLoading ? (
+                                    <h1 className='card-title'><strong> {firstName} {lastName} </strong> </h1>
+                                    <p className='card-text mt-4'><strong>Usuario:</strong> {username} </p>
+                                    <p><strong>Email:</strong> {email} </p>
+                                    <p><strong>Celular:</strong> {telephone} </p>
+
+                                    {/* Mostrar las calificaciones del oferente 
+                                    {isLoading_ratings ? (
                                         <p>Cargando calificaciones...</p>
-                                    ) : errors ? (
+                                    ) : error_ratings ? (
                                         <p>Error al cargar las calificaciones.</p>
                                     ) : (
-                                        data && data.length > 0 ? (
+                                        data_ratings && data_ratings.length > 0 ? (
                                             <div>
                                                 <h3>Calificaciones</h3>
-                                                {data.map((rating) => (
+                                                {data_ratings.map((rating) => (
                                                     <div key={rating.id} className="mb-3">
                                                         {renderStars(rating.stars)}
                                                         <p>{rating.comment}</p>
-                                                        {/* <p className='text-body-tertiary'>Autor: {rating.user.first_name} {rating.user.last_name}</p> */}
                                                     </div>
                                                 ))}
                                             </div>
@@ -81,6 +89,8 @@ export const Rating_Oferente = ({ id_oferente }) => {
                     </div>
                 </div>
             </div>
+            {state_oferente && <Rating_Oferente id_oferente={id_oferente} />}
         </div>
-    )
+    );
 };
+*/

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import useFetch from '../../hooks/fetchHook';
 import { PostCard } from './PostCard';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { CgMathPlus } from "react-icons/cg";
 import { useLocation,useNavigate } from 'react-router-dom';
@@ -9,7 +9,6 @@ import { useLocation,useNavigate } from 'react-router-dom';
 export const PostsList = () => {
     const navigate = useNavigate();
     const { token } = useAuth('state');
-    const [user, setUser] = useState(null)
     const location = useLocation();
     const query = new URLSearchParams(location.search);
     const serviceId = query.get('service');
@@ -17,48 +16,31 @@ export const PostsList = () => {
     const [ {data, isLoading, errors}, doFetch ] = useFetch(fetchUrl, {
         method: 'GET',
     });
+
+    const [{ data: profileData, isLoading: isLoadingProfile, errors: errorsProfile }, doFetchProfile] = useFetch(`${import.meta.env.VITE_BASE_URL}api/profile/`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Token ${token}` },
+    });
+
     useEffect(() => {
         doFetch();
+        doFetchProfile();
     }, [serviceId]);
-
-    // Otro fetch para traer informacion del usuario logueado
-    useEffect(() => {
-        if (data) {
-            const fetchUser = async () => {
-                try {
-                    const response = await fetch(`${import.meta.env.VITE_BASE_URL}api/profile/`, {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': `Token ${token}`,
-                        },
-                    });
-                    if (!response.ok) {
-                        console.log('Error al obtener los datos del usuario');
-                    }
-                    const user_data = await response.json();
-                    setUser(user_data);
-                } catch (error) {
-                    console.error(error);
-                }
-            };
-            fetchUser();
-        }
-    }, [data, token]);
 
     const handleAddService = () => {
         navigate('/posts/addPost');
     };
 
-    if (isLoading) return <div className='container text-center'>Cargando...</div>;
-    if (errors) return <div className='container text-center'>Error al cargar los posts.</div>;
-    if (!data) return <div className='container text-center'>La Sesion ha expirado, vuelva a iniciar sesion.</div>;
+    if (isLoading || isLoadingProfile ) return <div className='container text-center'>Cargando...</div>;
+    if (errors || errorsProfile) return <div className='container text-center'>Error al cargar los posts.</div>;
+    if (!data || !profileData) return <div className='container text-center'>La Sesion ha expirado, vuelva a iniciar sesion.</div>;
 
     return (
         <div className="container">
             <div className="row">
                 <div className="d-flex align-items-center">
                     <h1 className="flex-grow-1"> Publicaciones </h1>
-                    { user && user.is_supplier && (
+                    { profileData && profileData.is_supplier && (
                         <button type="button" className="btn btn-dark" onClick={handleAddService}>
                             <CgMathPlus /> Agregar Publicación
                         </button>

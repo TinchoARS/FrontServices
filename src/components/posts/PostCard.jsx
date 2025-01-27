@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import useFetch from '../../hooks/fetchHook';
 import { useEffect,useState } from 'react';
@@ -25,10 +26,13 @@ export const PostCard = ({ post }) => {
   };
 
   const handleEditarPerfil = () => {
-    navigate(`/ratings`, {
+    navigate(`/ratings`, { //interesante uso de state aunque no tiene persistencia
       state: {
         firstName: post.user.first_name,
         lastName: post.user.last_name,
+        username: post.user.username,
+        email: post.user.email,
+        telephone: post.user.telephone,
         id_oferente: post.user.id, // id del oferente para traer sus ratings
       },
     });
@@ -81,7 +85,7 @@ export const PostCard = ({ post }) => {
               className="btn btn-dark fw-bold me-3 mt-4"
               onClick={handleEditarPerfil}
             >
-              Calificacion
+              Ver perfil
             </button>
             <p className="card-text">{post.description}</p>
             <span className="badge text-bg-dark">{post.service.title}</span>

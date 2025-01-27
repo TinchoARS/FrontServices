@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
+import { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-export const RequestCard = ({ request, token, isSupplier ,setFilteredRequests, filteredRequests }) => {
+export const RequestCard = ({ request, token, isSupplier,profileId,setFilteredRequests, filteredRequests }) => {
     const anchoCard = {
         width: "auto",
     };
-
+    const navigate = useNavigate();
     const [show, setShow] = useState(false);
     const [reason, setReason] = useState('');
     const [status, setStatus] = useState('');
@@ -35,6 +37,27 @@ export const RequestCard = ({ request, token, isSupplier ,setFilteredRequests, f
                 r.id === request.id ? { ...r, status, reason } : r
             );
             setFilteredRequests(updatedRequests);
+            console.log(status)
+            console.log(request.id)
+            if (status === 'accepted') {
+                const statusServiceResponse = await fetch(`${import.meta.env.VITE_BASE_URL}api/statusservices/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Token ${token}`
+                    },
+                    body: JSON.stringify({
+                    status: 'en progreso',
+                    comment: 'en progreso',
+                    dateupdated : new Date(),
+                    request : request.id,
+                    user : profileId 
+                    })
+                });
+                if (!statusServiceResponse.ok) {
+                    throw new Error('Error al actualizar el estado del servicio');
+                }
+            }
         } catch (error) {
             console.error(error);
         }
@@ -46,18 +69,27 @@ export const RequestCard = ({ request, token, isSupplier ,setFilteredRequests, f
             <div className="card-body">
                 <h5 className="card-title"> {request.message} </h5>
                 <li className="list-group-item"> 
-                    <h1><span className="badge text-bg-dark">{request.status}</span></h1>
+                    {request.status === 'accepted' ? <h1><span className="badge bg-success">{request.status}</span></h1> : null}
+                    {request.status === 'rejected' ? <h1><span className="badge bg-danger">{request.status}</span></h1> : null}
+                    {request.status === 'pending' ? <h1><span className="badge bg-warning">{request.status}</span></h1> : null}
                 </li>
-                {console.log(isSupplier)}
                 {isSupplier && request.status === 'pending' && (
                 <div className="btn-group mt-2"> 
                     <button className="btn btn-success" onClick={() => handleShow('accepted')}>Aceptar</button> 
                     <button className="btn btn-danger" onClick={() => handleShow('rejected')}>Rechazar</button>
                 </div>
                 )}
+                {request.status === 'accepted' && (
+                 <div className="btn-group mt-2"> 
+                 <button className="btn btn-info" onClick={() => navigate(`/statusservices?request=${request.id}`)}>Ver estado</button> 
+             </div>   
+                )}
             </div>
             <ul className="list-group list-group-flush">
                 <li className="list-group-item"> {request.post.description} </li>
+                {isSupplier && (
+                    <li className="list-group-item">Solicitado por <strong>{request.user.username} </strong> </li>
+                )}
             </ul>
 
             <Modal show={show} onHide={handleClose}>

@@ -99,7 +99,7 @@ export const Profile = () => {
                                         onClick={handleDeleteProfile}
                                         disabled={isDeleting}
                                     >
-                                        {isDeleting ? 'Eliminando...' : 'Eliminar Cuenta'}
+                                        {isDeleting ? 'Eliminando....' : 'Eliminar Cuenta'}
                                     </button>
                                 </div>
                             </div>
