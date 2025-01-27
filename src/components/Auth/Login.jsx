@@ -47,7 +47,7 @@ export const Login = () => {
             <div className="row-left">
                 <div className="col-12 col-md-4">
                     <div className="text-center mb-4">
-                        <img src={logo} alt="logo Servify" className="img-fluid" style={{ maxWidth: '150px' }} />
+                        <img src={logo} alt="logo Servify" className="img-fluid" style={{ maxWidth: '250px' }} />
                     </div>
                     <h2 className="text-center mb-4">Iniciar Sesión</h2>
                     <form onSubmit={handleSubmit}>
