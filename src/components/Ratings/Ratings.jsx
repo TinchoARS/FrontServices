@@ -9,31 +9,12 @@ export const Ratings = () => {
     const { token } = useAuth('state');
     const [feedbackMessage, setFeedbackMessage] = useState('');
     const location = useLocation();
-    const { firstName, lastName, id_oferente } = location.state || {}; // Extrae los datos del estado
-    const [{ data_user, isLoading_user, errors_user }, doFetch_user] = useFetch(`${import.meta.env.VITE_BASE_URL}api/profile/`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Token ${token}`,
-        },
-    });
+    const { firstName, lastName, username, email, telephone, id_oferente, state_oferente,} = location.state || {};
+    const [formData, setFormData] = useState({ stars: "", comment: "" , user_id: id_oferente});
 
-    useEffect(() => {
-        doFetch_user();
-    }, []);
-
-    const [formData, setFormData] = useState({ rating: "", comment: "", oferente_id: id_oferente || "", buscador_id: "",});
-
-    useEffect(() => {
-        if (data_user) {
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                buscador_id: data_user.id,
-            }));
-        }
-    }, [data_user]);
-
-    // enviar calificacion al oferente
-    const [{ data, isLoading, errors }, doFetch] = useFetch(`${import.meta.env.VITE_BASE_URL}api/ratings/`, {
+    // Fetch para obtener las calificaciones del oferente
+    const ratings_url = `${import.meta.env.VITE_BASE_URL}api/ratings`;
+    const [{ data: data_ratings, isLoading: isLoading_ratings, error: error_ratings }, doFetch_ratings] = useFetch(ratings_url, {
         method: 'POST',
         headers: {
             'Authorization': `Token ${token}`,
@@ -41,7 +22,7 @@ export const Ratings = () => {
     });
 
     const handleStarClick = (value) => {
-        setFormData({ ...formData, rating: value });
+        setFormData({ ...formData, stars: value });
     };
 
     const handleChange = (e) => {
@@ -53,21 +34,20 @@ export const Ratings = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (!formData.rating) {
+        if (!formData.stars) {
             alert('Por favor, selecciona una calificación.');
             return;
         }
         const isConfirmed = window.confirm('¿Estás seguro de que deseas calificar al oferente?');
         if (isConfirmed) {
             const form = new FormData();
-            form.append("rating", formData.rating);
+            form.append("stars", formData.stars);
             form.append("comment", formData.comment);
-            form.append("buscador_id", formData.buscador_id); 
-            form.append("oferente_id", formData.oferente_id);
+            form.append("user_id", formData.user_id);
 
-            doFetch({ body: form });
+            doFetch_ratings({ body: form });
             console.log(form)
-            setFeedbackMessage(data ? '¡Servicio calificado con éxito!' : 'Error al calificar el servicio.');
+            setFeedbackMessage(data_ratings ? '¡Servicio calificado con éxito!' : 'Error al calificar el servicio.');
         }
     }
 
@@ -76,13 +56,6 @@ export const Ratings = () => {
         star: { cursor: 'pointer', fontSize: '24px', margin: '0 5px', color: 'gray' },
         starSelected: { color: 'gold' },
     };
-
-    console.log("Datos antes de enviar:", {
-        rating: formData.rating,
-        comment: formData.comment,
-        buscador_id: formData.buscador_id, // falla al implementar 
-        oferente_id: formData.oferente_id,
-    });
 
     return (
         <div className='container'>
@@ -99,10 +72,16 @@ export const Ratings = () => {
                         <div className="row g-0">
                             <div className="col-md-4">
                                 <img src='src/assets/userLogo.jpeg' className="card-img-top p-5" alt="foto de perfil" />
+                                {/* <img src={data.imagen} className="card-img-top" alt="foto de perfil" /> */}
                             </div>
                             <div className="col-md-8">
                                 <div className="card-body mt-3">
                                     <h2 className='card-title'><strong> {firstName} {lastName} </strong> </h2>
+                                    <p className='card-text mt-4'><strong>Usuario:</strong> {username} </p>
+                                    <p><strong>Email:</strong> {email} </p>
+                                    <p><strong>Celular:</strong> {telephone} </p>
+
+                                    {state_oferente &&  
                                     <form onSubmit={handleSubmit}>
                                         <div className="mb-3">
                                             <label htmlFor="rating" className="form-label">Calificación:</label>
@@ -111,7 +90,7 @@ export const Ratings = () => {
                                                     <span
                                                         key={star}
                                                         onClick={() => handleStarClick(star)}
-                                                        style={formData.rating >= star ? { ...starStyles.star, ...starStyles.starSelected } : starStyles.star}
+                                                        style={formData.stars >= star ? { ...starStyles.star, ...starStyles.starSelected } : starStyles.star}
                                                     >
                                                         ★
                                                     </span>
@@ -138,18 +117,15 @@ export const Ratings = () => {
                                             </div>
                                         </div>
                                     </form>
-
+                                    }
                                 </div>
                             </div>
                         </div>
 
-
                     </div>
                 </div>
             </div>
-
-            <Rating_Oferente id_oferente={id_oferente} />
-
+            {<Rating_Oferente id_oferente={id_oferente} />}
         </div>
     )
 };

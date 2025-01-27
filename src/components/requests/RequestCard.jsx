@@ -87,6 +87,9 @@ export const RequestCard = ({ request, token, isSupplier,profileId,setFilteredRe
             </div>
             <ul className="list-group list-group-flush">
                 <li className="list-group-item"> {request.post.description} </li>
+                {isSupplier && (
+                    <li className="list-group-item">Solicitado por <strong>{request.user.username} </strong> </li>
+                )}
             </ul>
 
             <Modal show={show} onHide={handleClose}>

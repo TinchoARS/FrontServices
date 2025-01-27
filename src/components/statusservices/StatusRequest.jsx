@@ -32,7 +32,7 @@ export const StatusRequest = () => {
         <div>{
             data.map((statusrequest,index) => (
                 <div key={index} className="col-12 col-md-4 mb-4">
-                    <StatusRequestCard statusrequest={statusrequest} />
+                    <StatusRequestCard statusrequest={statusrequest} profile={profileData} />
                 </div>
             ))
         }

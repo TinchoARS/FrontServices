@@ -8,7 +8,8 @@ export const RequestsList = () => {
     const { token } = useAuth('state');
     const [statusFilter,setStatusFilter] = useState('');
     const fetchUrl = statusFilter ? `${import.meta.env.VITE_BASE_URL}api/requests/?status=${statusFilter}` : `${import.meta.env.VITE_BASE_URL}api/requests/`;
-   
+   //AÑADIR APARTE DEL FILTRO DE STATUS EL FILTRO POR QUERYPARAMS PARA MIS SOLICITUDES ES DECIR CAMBIAR EL SEGUNDO GET YA QUE ME TRAE TODAS LAS SOLICITUDES
+   //NOS AHORRAMOS EL FILTRO HORRIBLE DE ABAJO JE
     const [{ data: requestsData, isLoading: isLoadingRequests, errors: errorsRequests }, doFetchRequests] = useFetch(fetchUrl, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Token ${token}` },
