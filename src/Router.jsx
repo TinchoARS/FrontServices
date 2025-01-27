@@ -15,6 +15,7 @@ import { FormServiceAdd } from "./components/services/FormServiceAdd";
 import { FormPostAdd } from "./components/posts/FormPostAdd";
 import { SavedList } from "./components/saved/SavedList";
 import { StatusRequest } from "./components/statusservices/StatusRequest";
+import { ProfileEdit } from "./components/user/ProfileEdit";
 
 export const Router = createBrowserRouter([
     {
@@ -76,11 +77,11 @@ export const Router = createBrowserRouter([
             },
             {
                 path: "/statusservices",
-                        element: (
-                            <ProtectedRoute>
-                                <StatusRequest />
-                            </ProtectedRoute>
-                        ),
+                element: (
+                    <ProtectedRoute>
+                        <StatusRequest />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "/posts",
@@ -137,7 +138,7 @@ export const Router = createBrowserRouter([
                     },
                     {
                         path: "edit",
-                        // element: <UserEdit />
+                        element: <ProfileEdit />
                     }
                 ]
             },

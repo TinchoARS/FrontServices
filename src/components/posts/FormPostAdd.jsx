@@ -63,10 +63,10 @@ export const FormPostAdd = () => {
     };
 
     return (
-        <div className="container">
+        <div className="container-sm">
             <div className="row">
-                <div className="d-flex align-items-center">
-                    <h1 className="flex-grow-1"> Agregar Publicación </h1>
+                <div className="d-flex align-items-center justify-content-center bg-light rounded ">
+                    <h1 className="text-center fw-bold p-3 rounded" style={{backgroundColor: '#FFC1C1'}}> Agregar Publicación </h1>
                 </div>
             </div>
             <hr />
@@ -74,6 +74,20 @@ export const FormPostAdd = () => {
             <div className="row">
                 <div className="col-12">
                 <form onSubmit={handleSubmit} className="rounded bg-white p-5">
+                    <div className="mb-3">
+                        <label htmlFor="title" className="form-label">
+                            Título
+                        </label>
+                        <input
+                            type="text"
+                            className="form-control bg-light"
+                            id="title"
+                            name="title"
+                            value={formData.title}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
                     <div className="mb-3">
                     <label htmlFor="description" className="form-label">
                         Descripción

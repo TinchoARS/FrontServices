@@ -1,6 +1,13 @@
 import '../../styles/SideBar.css'
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import home from '../../assets/home.png'
+import services from '../../assets/shop.png'
+import saved from '../../assets/bookmark.png'
+import requests from '../../assets/text-bubble.png'
+import profile from '../../assets/user.png'
+import post from '../../assets/menu.png'
+import logo from '../../assets/logo.png'
 
 export const SideBar = () => {
     const { logout } = useAuth("actions");
@@ -12,9 +19,9 @@ export const SideBar = () => {
     };
 
   return (
-    <div className="sidebar d-flex flex-column p-3">
-      <div className="row">
-        <img src="src/assets/logo.png" alt="logo Servify"/>
+    <div className="sidebar d-flex flex-column p-3 rounded">
+      <div className="logo-container">
+        <img src={logo} alt="logo Servify"/>
       </div>
       <div className="row">
         <NavLink
@@ -30,6 +37,7 @@ export const SideBar = () => {
             isActive ? { textDecoration: "underline", fontWeight: "bold"} : {}
           }
         >
+          <img src={home} alt="home" className= "img-fluid" style={{maxWidth: '30px'}} />
           Inicio
         </NavLink>
 
@@ -46,6 +54,7 @@ export const SideBar = () => {
             isActive ? { textDecoration: "underline", fontWeight: "bold"} : {}
           }
         >
+          <img src={services} alt="services" className= "img-fluid" style={{maxWidth: '50px'}} />
           Servicios
         </NavLink>
 
@@ -62,6 +71,7 @@ export const SideBar = () => {
             isActive ? { textDecoration: "underline", fontWeight: "bold"} : {}
           }
         >
+          <img src={post} alt="post" className= "img-fluid" style={{maxWidth: '50px'}} />
           Publicaciones
         </NavLink>
 
@@ -78,6 +88,7 @@ export const SideBar = () => {
             isActive ? { textDecoration: "underline", fontWeight: "bold"} : {}
           }
         >
+          <img src={requests} alt="requests" className= "img-fluid" style={{maxWidth: '50px'}} />
           Mis solicitudes
         </NavLink>
 
@@ -94,6 +105,7 @@ export const SideBar = () => {
             isActive ? { textDecoration: "underline", fontWeight: "bold"} : {}
           }
         >
+          <img src={saved} alt="saved" className= "img-fluid" style={{maxWidth: '50px'}} />
           Guardado
         </NavLink>
 
@@ -110,6 +122,7 @@ export const SideBar = () => {
             isActive ? { textDecoration: "underline", fontWeight: "bold"} : {}
           }
         >
+          <img src={profile} alt="profile" className= "img-fluid" style={{maxWidth: '50px'}} />
           Perfil
         </NavLink>
       </div>

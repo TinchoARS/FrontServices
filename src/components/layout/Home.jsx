@@ -32,7 +32,7 @@ export const Home = () => {
             <p>Desarrollador Frontend</p>
           </div>
           <div className="creator-box">
-            <h3>José Apellido</h3>
+            <h3>José Colque</h3>
             <p>Desarrollador Frontend</p>
           </div>
         </div>
