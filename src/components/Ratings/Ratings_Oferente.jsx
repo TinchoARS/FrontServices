@@ -67,7 +67,7 @@ export const Rating_Oferente = ({ id_oferente }) => {
                                                     <div key={rating.id} className="mb-3">
                                                         {renderStars(rating.stars)}
                                                         <p>{rating.comment}</p>
-                                                        <p className='text-body-tertiary'>Autor: {rating.user.first_name} {rating.user.last_name}</p>
+                                                        {/* <p className='text-body-tertiary'>Autor: {rating.user.first_name} {rating.user.last_name}</p> */}
                                                     </div>
                                                 ))}
                                             </div>

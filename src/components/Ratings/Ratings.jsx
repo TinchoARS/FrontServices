@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useFetch from '../../hooks/fetchHook';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLocation } from 'react-router-dom';
@@ -56,6 +57,8 @@ export const Ratings = () => {
         star: { cursor: 'pointer', fontSize: '24px', margin: '0 5px', color: 'gray' },
         starSelected: { color: 'gold' },
     };
+
+    if (error_ratings) return <div className='container text-center'>Error al cargar datos del perfil.</div>;
 
     return (
         <div className='container'>
