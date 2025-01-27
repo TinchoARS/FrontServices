@@ -14,7 +14,7 @@ export const Ratings = () => {
     const [formData, setFormData] = useState({ stars: "", comment: "" , user_id: id_oferente});
 
     // Fetch para obtener las calificaciones del oferente
-    const ratings_url = `${import.meta.env.VITE_BASE_URL}api/ratings`;
+    const ratings_url = `${import.meta.env.VITE_BASE_URL}api/ratings/`;
     const [{ data: data_ratings, isLoading: isLoading_ratings, error: error_ratings }, doFetch_ratings] = useFetch(ratings_url, {
         method: 'POST',
         headers: {
@@ -48,7 +48,8 @@ export const Ratings = () => {
 
             doFetch_ratings({ body: form });
             console.log(form)
-            setFeedbackMessage(data_ratings ? '¡Servicio calificado con éxito!' : 'Error al calificar el servicio.');
+            alert("Calificacion enviada con exito!");
+            window.location.reload();
         }
     }
 
