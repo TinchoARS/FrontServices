@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useFetch from '../../hooks/fetchHook';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -66,6 +67,7 @@ export const Rating_Oferente = ({ id_oferente }) => {
                                                     <div key={rating.id} className="mb-3">
                                                         {renderStars(rating.stars)}
                                                         <p>{rating.comment}</p>
+                                                        {/* <p className='text-body-tertiary'>Autor: {rating.user.first_name} {rating.user.last_name}</p> */}
                                                     </div>
                                                 ))}
                                             </div>
