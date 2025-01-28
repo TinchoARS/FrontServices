@@ -67,8 +67,10 @@ export const Register = () => {
 
     doFetch({ body: form });
     console.log(form)
-    alert("Usuario registrado con exito");
-    navigate("/login");
+    if (!isError) {
+        alert("Usuario registrado con éxito");
+        navigate("/login");
+    }
   };
 
 
