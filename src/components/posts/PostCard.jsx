@@ -4,6 +4,7 @@ import useFetch from '../../hooks/fetchHook';
 import { useEffect,useState } from 'react';
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 //se configuro el boton contratar servicio solo para el usuario buscador
 export const PostCard = ({ post }) => {
@@ -56,16 +57,17 @@ export const PostCard = ({ post }) => {
       });
 
       if (response.ok) {
-        alert('Solicitud registrada correctamente');
+        toast.success('Solicitud registrada correctamente!');
         // Aquí puedes actualizar el estado o recargar los datos de la página
         // por ejemplo, actualizando el estado del post, o realizando un fetch nuevamente
         setIsModalOpen(false); // Cerrar el modal
         navigate('/requests');
       } else {
-        alert('Hubo un error al registrar la solicitud');
+        toast.error('Hubo un error al registrar la solicitud');
       }
     } catch (error) {
-      alert('Error en la solicitud', error);
+      console.log(error)
+      toast.error('Hubo un error al registrar la solicitud');
     }
   };
   if (isLoadingProfile) return <div className='container text-center'>Cargando...</div>;

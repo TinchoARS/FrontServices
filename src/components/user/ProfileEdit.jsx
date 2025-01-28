@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import useFetch from "../../hooks/fetchHook";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { toast } from "react-toastify";
 
 export const ProfileEdit = () => {
     const navigate = useNavigate();
@@ -82,9 +83,7 @@ export const ProfileEdit = () => {
         // form.append("imagen", formData.imagen); // Incluye la imagen en el form
 
         doFetch({ body: form });
-        console.log(form)
-        alert("Usuario Actualizado con exito");
-        console.log(data);
+        toast.success("Usuario Actualizado con exito");
         navigate("/profile");
     };
 
