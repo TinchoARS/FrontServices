@@ -5,6 +5,7 @@ import useFetch from "../../hooks/fetchHook";
 import { useAuth } from "../../contexts/AuthContext";
 import "@fontsource/urbanist";
 import "@fontsource/urbanist/700.css"; // Para el peso bold
+import { toast } from "react-toastify";
 
 
 export const FormPostAdd = () => {
@@ -61,7 +62,7 @@ export const FormPostAdd = () => {
         form.append("disponibility", formData.disponibility);
         form.append("service", parseInt(formData.service_id));
         doFetch({ body: form });
-        alert("Publicacion creada con exito!");
+        toast.success('Publicación creada con éxito.');
         navigate("/posts");
     };
 

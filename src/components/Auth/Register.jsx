@@ -4,6 +4,7 @@ import useFetch from "../../hooks/fetchHook";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import background from "../../assets/background3.png";
+import { toast } from "react-toastify";
 
 export const Register = () => {
     const navigate = useNavigate();
@@ -68,7 +69,7 @@ export const Register = () => {
     doFetch({ body: form });
     console.log(form)
     if (!isError) {
-        alert("Usuario registrado con éxito");
+        toast.success("Usuario registrado con éxito");
         navigate("/login");
     }
   };

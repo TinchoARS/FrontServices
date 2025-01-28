@@ -4,6 +4,7 @@ import './styles/mainContent.css'
 import './styles/SideBar.css'
 import { SideBar } from "./components/layout/SideBar"
 import { FloatingLogo } from "./components/layout/FloatingLogo"
+import { ToastContainer } from "react-toastify"
 
 export const Layout = () => {
   const location = useLocation();
@@ -19,6 +20,18 @@ export const Layout = () => {
           {shouldShowNavbar && <SideBar />}
           <div className={`main-content ${!shouldShowNavbar ? 'without-sidebar' : ''}`}>
             <Outlet />
+            <ToastContainer 
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="colored"
+            />
           </div>
           {shouldShowLogo && <FloatingLogo />}
         </div>
