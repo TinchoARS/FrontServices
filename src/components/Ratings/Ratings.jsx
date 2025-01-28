@@ -5,6 +5,7 @@ import useFetch from '../../hooks/fetchHook';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLocation } from 'react-router-dom';
 import { Rating_Oferente } from './Ratings_Oferente';
+import { toast } from 'react-toastify';
 
 export const Ratings = () => {
     const { token } = useAuth('state');
@@ -36,7 +37,7 @@ export const Ratings = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (!formData.stars) {
-            alert('Por favor, selecciona una calificación.');
+            toast.error('Por favor, selecciona una calificación.');
             return;
         }
         const isConfirmed = window.confirm('¿Estás seguro de que deseas calificar al oferente?');
@@ -48,7 +49,7 @@ export const Ratings = () => {
 
             doFetch_ratings({ body: form });
             console.log(form)
-            alert("Calificacion enviada con exito!");
+            toast.success('Calificación enviada con éxito.');
             window.location.reload();
         }
     }

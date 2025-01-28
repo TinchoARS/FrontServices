@@ -2,6 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useFetch from "../../hooks/fetchHook";
+import { toast } from "react-toastify";
 
 
 export const FormServiceAdd = () => {
@@ -48,7 +49,7 @@ export const FormServiceAdd = () => {
         // form.append("imagen", formData.imagen); // Incluye la imagen en el form
 
         doFetch({ body: form });
-        alert("Servicio creado con exito!");
+        toast.success("Servicio creado con exito");
         navigate("/services");
     };
 

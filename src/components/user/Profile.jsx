@@ -4,6 +4,7 @@ import useFetch from '../../hooks/fetchHook';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Rating_Oferente } from '../Ratings/Ratings_Oferente';
+import { toast } from 'react-toastify';
 
 export const Profile = () => {
     const { token } = useAuth('state');
@@ -44,9 +45,9 @@ export const Profile = () => {
                 const data = text ? JSON.parse(text) : {};
 
                 if (data.message) {
-                    alert(data.message);
+                    toast.error(data.message);
                 } else {
-                    alert('Cuenta eliminada con éxito.');
+                    toast.success('Cuenta eliminada con éxito.');
                 }
 
                 logout();

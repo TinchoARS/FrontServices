@@ -7,13 +7,14 @@ export const RequestsList = () => {
   const { token } = useAuth('state');
   const [statusFilter, setStatusFilter] = useState('');
   const [filteredRequests, setFilteredRequests] = useState([]);
+  const [fetchUrl, setFetchUrl] = useState ('');
 
   const [{ data: profileData, isLoading: isLoadingProfile, errors: errorsProfile }, doFetchProfile] = useFetch(`${import.meta.env.VITE_BASE_URL}api/profile/`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Token ${token}` },
   });
 
-  const [{ data: requestsData, isLoading: isLoadingRequests, errors: errorsRequests }, doFetchRequests] = useFetch(`${import.meta.env.VITE_BASE_URL}api/requests/?user=${profileData?.id}`, {
+  const [{ data: requestsData, isLoading: isLoadingRequests, errors: errorsRequests }, doFetchRequests] = useFetch(fetchUrl, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Token ${token}` },
   });
@@ -24,10 +25,15 @@ export const RequestsList = () => {
 
   useEffect(() => {
     if (profileData) {
+      const url = statusFilter ? `${import.meta.env.VITE_BASE_URL}api/requests/?status=${statusFilter}&user=${profileData.id}` : `${import.meta.env.VITE_BASE_URL}api/requests/?user=${profileData.id}`;
+      setFetchUrl(url);
+    }
+  }, [profileData, statusFilter]);
+  useEffect(() => {
+    if (fetchUrl) {
       doFetchRequests();
     }
-  }, [profileData]);
-
+  }, [fetchUrl]);
   useEffect(() => {
     if (requestsData) {
       setFilteredRequests(requestsData);
