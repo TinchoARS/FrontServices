@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-export const RequestCard = ({ request, token, isSupplier,profileId,setFilteredRequests, filteredRequests }) => {
+export const RequestCard = ({ request, token, isSupplier,profileId }) => {
     const anchoCard = {
         width: "auto",
     };
@@ -33,12 +33,9 @@ export const RequestCard = ({ request, token, isSupplier,profileId,setFilteredRe
                 throw new Error('Error al actualizar la solicitud');
             }
             // Actualizar la lista de solicitudes después de la actualización
-            const updatedRequests = filteredRequests.map(r => 
-                r.id === request.id ? { ...r, status, reason } : r
-            );
-            setFilteredRequests(updatedRequests);
-            console.log(status)
-            console.log(request.id)
+            request.status = status;
+            request.reason = reason;
+
             if (status === 'accepted') {
                 const statusServiceResponse = await fetch(`${import.meta.env.VITE_BASE_URL}api/statusservices/`, {
                     method: 'POST',
