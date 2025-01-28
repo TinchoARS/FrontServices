@@ -67,8 +67,10 @@ export const Register = () => {
 
     doFetch({ body: form });
     console.log(form)
-    alert("Usuario registrado con exito");
-    navigate("/login");
+    if (!isError) {
+        alert("Usuario registrado con éxito");
+        navigate("/login");
+    }
   };
 
 
@@ -186,7 +188,6 @@ export const Register = () => {
                             <button type="submit" className="btn btn-primary w-100">
                                 Registrarme
                             </button>
-                            {isLoading && <p className="mt-3">Cargando...</p>}
                             {isError && <p className="text-danger mt-3">Error al cargar los datos.</p>}
                         </div>
                         <hr style={{ backgroundColor: '#dee2e6', opacity: '0.3' }} />
