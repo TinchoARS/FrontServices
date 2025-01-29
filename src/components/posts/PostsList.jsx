@@ -46,7 +46,7 @@ export const PostsList = () => {
                         </button>
                     )}
                 </div>
-                <hr />
+                <hr className="border border-primary border-2 opacity-50" />
             </div>
            
             <div className="row">
