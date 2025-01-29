@@ -24,7 +24,7 @@
  1. Clona el repositorio:
      ```bash
      git clone https://github.com/TinchoARS/FrontServices
-     cd proyecto_final_react
+     cd frontservices
      ```
   2. Instala las dependencias:
      ```bash
@@ -39,7 +39,7 @@
 Variebale de entorno: 
 [`.env`](app/.env")
   ```env
-  API_URL = http://api.com
+  VITE_BASE_URL = https://api-hn1b.onrender.com
   ```
 
 ### **Estructura de archivos y carpetas**
