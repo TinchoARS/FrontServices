@@ -70,7 +70,7 @@ export const Profile = () => {
             <div className="row">
                 <div className="col-12">
                     <h1>Mi perfil</h1>
-                    <hr />
+                    <hr className="border border-primary border-2 opacity-50" />
                 </div>
             </div>
             <div className="row">

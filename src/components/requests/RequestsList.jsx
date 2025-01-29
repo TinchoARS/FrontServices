@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import useFetch from '../../hooks/fetchHook';
 import { useEffect, useState } from 'react';
 import { useAuth } from "../../contexts/AuthContext";
@@ -52,7 +54,7 @@ export const RequestsList = () => {
     <div className="container">
       <div className="row">
         <h1>Mis solicitudes</h1>
-        <hr />
+        <hr className="border border-primary border-2 opacity-50" />
       </div>
 
       <div className="row mb-3">
