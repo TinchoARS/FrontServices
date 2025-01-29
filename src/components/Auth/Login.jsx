@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import useFetch from "../../hooks/fetchHook";
 import { useAuth } from "../../contexts/AuthContext";
-import logo from '../../assets/logo.png'
-import background from '../../assets/background3.png'
+import logo from '/assets/logo.png'
+import background from '/assets/background3.png'
 
 export const Login = () => {
     const [triggerFetch, setTriggerFetch] = useState(false);
