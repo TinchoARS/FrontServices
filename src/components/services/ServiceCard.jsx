@@ -1,32 +1,35 @@
 /* eslint-disable react/prop-types */
 import { useNavigate } from "react-router-dom";
+import '../../styles/ServiceCard.css';
+import { formatDistanceToNow } from "date-fns";
+import { es } from "date-fns/locale";
 
 export const ServiceCard = ({ service }) => {
   const navigate = useNavigate();
+  const timeAgo = formatDistanceToNow(new Date(service.created_at), { addSuffix: true, locale: es });
 
   const handleServiceDetails = () => {
-    navigate(`/services/${service.id}`);
-  };
-
-  const anchoCard = {
-    width: "auto",
+    navigate(`/services/${service.id}/`);
   };
 
   return (
-    <div className="card" style={anchoCard}>
-      <div className="card-body">
-        <h5 className="card-title"> {service.title} </h5>
-        <li className="list-group-item"> 
-          <span className="badge text-bg-dark">{service.category}</span>
-        </li>
-      </div>
-      <ul className="list-group list-group-flush">
-        <li className="list-group-item"> {service.description} </li>
-      </ul>
-      <div className="card-body">
-        <button className="btn btn-outline-dark fw-bold w-100" onClick={handleServiceDetails}>
-          Ver detalles
-        </button>
+    <div id="cardService" className="cardServ">
+      <div className="containerCardService">
+        <div className="left">
+          <div className="status-ind"></div>
+        </div>
+        <div className="right">
+          <div className="text-wrap">
+            <p className="text-content">
+              <a className="text-link" href="#">{service.category}</a>
+            </p>
+            <p className="text-content">{service.title}</p>
+            <p className="time">Publicado {timeAgo}</p>
+          </div>
+          <div className="button-wrap">
+            <button className="primary-cta" onClick={handleServiceDetails}>Ver detalles</button>
+          </div>
+        </div>
       </div>
     </div>
   );

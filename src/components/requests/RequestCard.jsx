@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { formatDistanceToNow } from "date-fns";
+import { es } from "date-fns/locale";
 
 export const RequestCard = ({ request, token, isSupplier,profileId }) => {
     const anchoCard = {
@@ -61,33 +63,40 @@ export const RequestCard = ({ request, token, isSupplier,profileId }) => {
         handleClose();
     };
 
+    const timeAgo = formatDistanceToNow(new Date(request.created_at), { addSuffix: true, locale: es });
+
     return (
         <div className="card" style={anchoCard}>
             <div className="card-body">
-                <h5 className="card-title"> {request.message} </h5>
-                <li className="list-group-item"> 
-                    {request.status === 'accepted' ? <h1><span className="badge bg-success">{request.status}</span></h1> : null}
-                    {request.status === 'rejected' ? <h1><span className="badge bg-danger">{request.status}</span></h1> : null}
-                    {request.status === 'pending' ? <h1><span className="badge bg-warning">{request.status}</span></h1> : null}
-                </li>
-                {isSupplier && request.status === 'pending' && (
-                <div className="btn-group mt-2"> 
-                    <button className="btn btn-success" onClick={() => handleShow('accepted')}>Aceptar</button> 
-                    <button className="btn btn-danger" onClick={() => handleShow('rejected')}>Rechazar</button>
-                </div>
-                )}
-                {request.status === 'accepted' && (
-                 <div className="btn-group mt-2"> 
-                 <button className="btn btn-info" onClick={() => navigate(`/statusservices?request=${request.id}`)}>Ver estado</button> 
-             </div>   
-                )}
+                <p className="card-title"> <span className='fw-bold'>Mensaje:</span> {request.message} </p>
             </div>
             <ul className="list-group list-group-flush">
-                <li className="list-group-item"> {request.post.description} </li>
+                <li className="list-group-item"> <span className='fw-bold'>Servicio:</span> {request.post.description} </li>
                 {isSupplier && (
                     <li className="list-group-item">Solicitado por <strong>{request.user.username} </strong> </li>
                 )}
             </ul>
+            <ul className="list-group list-group-flush">
+                <li className="list-group-item text-body-secondary"> Creado {timeAgo} </li>
+            </ul>
+
+            <li className="list-group-item"> 
+                {request.status === 'accepted' ? <h3><span className="badge bg-success m-2">{request.status}</span></h3> : null}
+                {request.status === 'rejected' ? <h3><span className="badge bg-danger m-2">{request.status}</span></h3> : null}
+                {request.status === 'pending' ? <h3><span className="badge bg-warning m-2">{request.status}</span></h3> : null}
+            </li>
+            {isSupplier && request.status === 'pending' && (
+                <div className="btn-group mt-2"> 
+                    <button className="btn btn-success m-2" onClick={() => handleShow('accepted')}>Aceptar</button> 
+                    <button className="btn btn-danger m-2" onClick={() => handleShow('rejected')}>Rechazar</button>
+                </div>
+            )}
+
+            {request.status === 'accepted' && (
+                <div className="btn-group mt-2"> 
+                <button className="btn btn-secondary m-3" onClick={() => navigate(`/statusservices/?request=${request.id}`)}>Ver estado</button> 
+            </div>
+            )}
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>

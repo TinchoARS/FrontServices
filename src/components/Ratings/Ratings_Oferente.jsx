@@ -44,7 +44,7 @@ export const Rating_Oferente = ({ id_oferente }) => {
             <div className="row">
                 <div className="col-12">
                     <h1>Calificaciones</h1>
-                    <hr />
+                    <hr className="border border-primary border-2 opacity-50" />
                 </div>
             </div>
 

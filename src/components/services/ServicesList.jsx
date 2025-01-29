@@ -94,7 +94,7 @@ export const ServicesList = () => {
                     )}
                 </div>
             </div>
-            <hr />
+            <hr className="border border-primary border-2 opacity-50" />
 
             <div className="row mb-3">
                 <div className="col-md-12">

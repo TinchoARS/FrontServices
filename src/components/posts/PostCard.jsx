@@ -5,6 +5,8 @@ import { useEffect,useState } from 'react';
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { formatDistanceToNow } from "date-fns";
+import { es } from "date-fns/locale";
 
 //se configuro el boton contratar servicio solo para el usuario buscador
 export const PostCard = ({ post }) => {
@@ -118,6 +120,10 @@ export const PostCard = ({ post }) => {
       toast.error('Hubo un error al registrar la solicitud');
     }
   };
+
+  // Función para formatear la fecha y hora
+  const timeAgo = formatDistanceToNow(new Date(post.datecreated), { addSuffix: true, locale: es });
+
   if (isLoadingProfile) return <div className='container text-center'>Cargando...</div>;
   if (errorsProfile) return <div className='container text-center'>Error al cargar los datos.</div>;
   if (!profileData) return <div className='container text-center'>La Sesión ha expirado, vuelva a iniciar sesión.</div>;
@@ -126,12 +132,12 @@ export const PostCard = ({ post }) => {
     <div className="card mb-3" style={anchoCard}>
       <div className="row g-0">
         <div className="col-md-1">
-          <img src='src/assets/userLogo.jpeg' alt="User" className="img-fluid rounded-start p-2" width={'100px'} />
+          <img src='/assets/userLogo.jpeg' alt="User" className="img-fluid rounded-start p-2" width={'100px'} />
         </div>
         <div className="col-md-11">
           <div className="card-body">
             <div className="d-flex justify-content-between">
-              <h5 className="card-title">{post.user.first_name} {post.user.last_name}</h5>
+              <button className='btn fw-bold fs-4' onClick={handleEditarPerfil}>{post.user.first_name} {post.user.last_name}</button>
               { isSaved ? (
                 <button className="btn btn-outline-danger fw-bold" onClick={handleDeleteSavedPost}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-x-circle" viewBox="0 0 16 18">
@@ -148,17 +154,11 @@ export const PostCard = ({ post }) => {
               )
             }
             </div>
-            <button
-              className="btn btn-dark fw-bold me-3 mt-4"
-              onClick={handleEditarPerfil}
-            >
-              Ver perfil
-            </button>
             <p className="card-text">{post.description}</p>
             <span className="badge text-bg-dark">{post.service.title}</span>
             <p className="card-text">Disponibilidad: {post.disponibility}</p>
             <p className="card-text">
-              <small className="text-muted">creado el {new Date(post.datecreated).toISOString().slice(0, 19).replace('T', ' ')}</small>
+              <small className="text-muted">Publicado {timeAgo}</small>
             </p>
             {profileData.is_finder && (
             <button

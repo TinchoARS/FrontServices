@@ -4,6 +4,9 @@ import { useEffect } from 'react';
 import { useAuth } from "../../contexts/AuthContext";
 import useFetch from "../../hooks/fetchHook";
 import { SlArrowLeft } from "react-icons/sl";
+import '../../styles/ServiceCard.css';
+import { formatDistanceToNow } from "date-fns";
+import { es } from "date-fns/locale";
 
 export const ServiceDetails = () => {
     const { idService } = useParams();
@@ -25,11 +28,8 @@ export const ServiceDetails = () => {
     if (!data) return <div className='container text-center'>La Sesion ha expirado, vuelva a iniciar sesion.</div>;
 
     // Función para formatear la fecha y hora
-    const formatDateTime = (dateTimeString) => {
-        const date = new Date(dateTimeString);
-        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-        return date.toLocaleDateString('es-ES', options);
-    };
+    const timeAgo = formatDistanceToNow(new Date(data.created_at), { addSuffix: true, locale: es });
+
 
     const viewPosts = () => {
         navigate(`/posts?service=${idService}`);
@@ -46,27 +46,35 @@ export const ServiceDetails = () => {
                         </button>
                     </div>
                     <hr />
-                    <div className="card">
-                        <div className="card-body">
-                            <h2 className="card-title"> {data.title} </h2>
-                        </div>
-                        <ul className="list-group list-group-flush">
-                            <li className="list-group-item"> {data.description} </li>
-                            <li className="list-group-item"> Categoría: {data.category} </li>
-                            <li className="list-group-item"> duración: {data.duration} </li>
-                            <li className="list-group-item"> Alta de Servicio: {formatDateTime(data.created_at)} hs. </li>
-                            <li className="list-group-item">
-                                {data.tags && data.tags.split(",").map((tag, index) => (
-                                    <span key={index} className="badge text-bg-dark ms-1">
-                                        {tag}
-                                    </span>
-                                ))}
-                            </li>
-                        </ul>
-                        <div className="card-body">
-                            <button className="btn btn-outline-dark fw-bold w-100" onClick={viewPosts}>
-                                Ver publicaciones de este servicio
-                            </button>
+
+                    <div id="cardService" className="cardServ">
+                        <div className="containerCardService">
+                            <div className="left">
+                            <div className="status-ind"></div>
+                            </div>
+                            <div className="right">
+                            <div className="text-wrap">
+                                <p className="text-content">
+                                <a className="text-link" href="#">{data.category}</a>
+                                </p>
+                                <p className="text-content">{data.title}</p>
+                                <p className="text-content">{data.description}</p>
+                                <p className="text-content">Duración: {data.duration}</p>
+                                <ul className="list-group">
+                                    <li className="">
+                                        {data.tags && data.tags.split(",").map((tag, index) => (
+                                            <span key={index} className="badge text-bg-dark ms-1">
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </li>
+                                </ul>
+                                <p className="time mt-4">Publicado {timeAgo}</p>
+                            </div>
+                            <div className="button-wrap">
+                                <button className="primary-cta" onClick={viewPosts}>Ver publicaciones de este servicio</button>
+                            </div>
+                            </div>
                         </div>
                     </div>
                 </div>

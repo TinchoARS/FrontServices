@@ -70,7 +70,7 @@ export const Profile = () => {
             <div className="row">
                 <div className="col-12">
                     <h1>Mi perfil</h1>
-                    <hr />
+                    <hr className="border border-primary border-2 opacity-50" />
                 </div>
             </div>
             <div className="row">
@@ -78,7 +78,7 @@ export const Profile = () => {
                     <div className="card mb-3">
                         <div className="row g-0">
                             <div className="col-md-4">
-                                <img src='src/assets/userLogo.jpeg' className="card-img-top p-5" alt="foto de perfil" />
+                                <img src='/assets/userLogo.jpeg' className="card-img-top p-5" alt="foto de perfil" />
                                 {/* <img src={data.imagen} className="card-img-top" alt="foto de perfil" /> */}
                             </div>
                             <div className="col-md-8">
