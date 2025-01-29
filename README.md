@@ -53,6 +53,7 @@ Variebale de entorno:
 
 ### **Guía de Uso:**
 - **Ejemplos de uso:** 
+
 OFERENTE:
 
     1. Inicia sesión como oferente.
@@ -66,12 +67,12 @@ BUSCADOR:
     3. Accede a "Mis solicitudes" para revisar el estado de tus servicios contratados.
 
 
-
 ### **Capturas de pantalla**
 ![Captura de pantalla](./preview/Search.png)
 
 
 ### **Flujos de trabajo:**
+
     1. Explorar servicios: Los buscadores pueden navegar por las publicaciones activas.
     2. Contratar servicios: Los buscadores seleccionan y contratan servicios.
     3. Gestión de servicios: Los oferentes pueden administrar las solicitudes y cambiar el estado de sus servicios.
@@ -92,13 +93,13 @@ BUSCADOR:
 #### Descripción de funcionalidades:
     - Buscar servicios: Permite a los buscadores explorar las ofertas activas.
 
-    -Crear servicios: Permite a los oferentes agregar nuevos servicios a la plataforma.
+    - Crear servicios: Permite a los oferentes agregar nuevos servicios a la plataforma.
 
-    -Publicar servicios: Permite a los oferentes crear publicaciones relacionadas con sus servicios.
+    - Publicar servicios: Permite a los oferentes crear publicaciones relacionadas con sus servicios.
 
-    -Gestionar solicitudes: Los buscadores pueden revisar el estado de sus servicios contratados y calificarlos.
+    - Gestionar solicitudes: Los buscadores pueden revisar el estado de sus servicios contratados y calificarlos.
 
-    -Actualizar estado: Los oferentes pueden cambiar el estado de un servicio según su progreso.
+    - Actualizar estado: Los oferentes pueden cambiar el estado de un servicio según su progreso.
 
 #### Preguntas Frecuentes (FAQs):
     - ¿Cómo contrato un servicio?: Ve a "Publicaciones", selecciona un servicio y haz clic en "Contratar".
