@@ -5,6 +5,7 @@ import useFetch from '../../hooks/fetchHook';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLocation } from 'react-router-dom';
 import { Rating_Oferente } from './Ratings_Oferente';
+import { toast } from 'react-toastify';
 
 export const Ratings = () => {
     const { token } = useAuth('state');
@@ -14,7 +15,7 @@ export const Ratings = () => {
     const [formData, setFormData] = useState({ stars: "", comment: "" , user_id: id_oferente});
 
     // Fetch para obtener las calificaciones del oferente
-    const ratings_url = `${import.meta.env.VITE_BASE_URL}api/ratings`;
+    const ratings_url = `${import.meta.env.VITE_BASE_URL}api/ratings/`;
     const [{ data: data_ratings, isLoading: isLoading_ratings, error: error_ratings }, doFetch_ratings] = useFetch(ratings_url, {
         method: 'POST',
         headers: {
@@ -36,7 +37,7 @@ export const Ratings = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (!formData.stars) {
-            alert('Por favor, selecciona una calificación.');
+            toast.error('Por favor, selecciona una calificación.');
             return;
         }
         const isConfirmed = window.confirm('¿Estás seguro de que deseas calificar al oferente?');
@@ -48,7 +49,8 @@ export const Ratings = () => {
 
             doFetch_ratings({ body: form });
             console.log(form)
-            setFeedbackMessage(data_ratings ? '¡Servicio calificado con éxito!' : 'Error al calificar el servicio.');
+            toast.success('Calificación enviada con éxito.');
+            window.location.reload();
         }
     }
 
@@ -65,7 +67,7 @@ export const Ratings = () => {
             <div className="row">
                 <div className="col-12">
                     <h1>Calificar al Oferente</h1>
-                    <hr />
+                    <hr className="border border-primary border-2 opacity-50" />
                 </div>
             </div>
 

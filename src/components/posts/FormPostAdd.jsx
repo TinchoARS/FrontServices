@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useFetch from "../../hooks/fetchHook";
 import { useAuth } from "../../contexts/AuthContext";
+import "@fontsource/urbanist";
+import "@fontsource/urbanist/700.css"; // Para el peso bold
+import { toast } from "react-toastify";
+
 
 export const FormPostAdd = () => {
     const navigate = useNavigate();
@@ -58,47 +62,33 @@ export const FormPostAdd = () => {
         form.append("disponibility", formData.disponibility);
         form.append("service", parseInt(formData.service_id));
         doFetch({ body: form });
-        alert("Publicacion creada con exito!");
+        toast.success('Publicación creada con éxito.');
         navigate("/posts");
     };
 
     return (
         <div className="container-sm">
-            <div className="row">
-                <div className="d-flex align-items-center justify-content-center bg-light rounded ">
-                    <h1 className="text-center fw-bold p-3 rounded" style={{backgroundColor: '#FFC1C1'}}> Agregar Publicación </h1>
+            <div className="row justify-content-center ">
+                <div className="col-6 d-flex align-items-center justify-content-center bg-light rounded">
+                    <h1 className="text-center fw-bold p-3 rounded col-12 mt-2" style={{backgroundColor: '#FFC1C1', fontFamily: 'Urbanist'}}> Agregar Publicación </h1>
                 </div>
             </div>
             <hr />
 
             <div className="row">
-                <div className="col-12">
-                <form onSubmit={handleSubmit} className="rounded bg-white p-5">
-                    <div className="mb-3">
-                        <label htmlFor="title" className="form-label">
-                            Título
-                        </label>
-                        <input
-                            type="text"
-                            className="form-control bg-light"
-                            id="title"
-                            name="title"
-                            value={formData.title}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+                <div className="col-12 col-md-8 mx-auto p-3 ">
+                <form onSubmit={handleSubmit} className="rounded   p-4" style={{backgroundColor: '#E0E8EE'}}>
                     <div className="mb-3">
                     <label htmlFor="description" className="form-label">
                         Descripción
                     </label>
-                    <input
-                        type="text"
+                    <textarea
                         className="form-control bg-light"
                         id="description"
                         name="description"
                         value={formData.description}
                         onChange={handleChange}
+                        rows="4"
                         required
                     />
                     </div>
@@ -136,7 +126,7 @@ export const FormPostAdd = () => {
                     </div>
                     <div className="mb-3 text-center">
                         <div className="control">
-                            <button type="submit" className="btn btn-dark text-center ">
+                            <button type="submit" className="btn btn-light text-center mt-5 px-5 py-2 fs-5 ">
                             Publicar
                             </button>
                         </div>

@@ -4,6 +4,9 @@ import useFetch from '../../hooks/fetchHook';
 import { useEffect,useState } from 'react';
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { formatDistanceToNow } from "date-fns";
+import { es } from "date-fns/locale";
 
 //se configuro el boton contratar servicio solo para el usuario buscador
 export const PostCard = ({ post }) => {
@@ -11,6 +14,7 @@ export const PostCard = ({ post }) => {
   const [message, setMessage] = useState(''); // Estado para el mensaje del usuario
   const { token } = useAuth('state');
   const navigate = useNavigate();
+  const [isSaved, setIsSaved] = useState(false);
 
   const [{ data: profileData, isLoading: isLoadingProfile, errors: errorsProfile }, doFetchProfile] = useFetch(`${import.meta.env.VITE_BASE_URL}api/profile/`, {
     method: 'GET',
@@ -38,6 +42,53 @@ export const PostCard = ({ post }) => {
     });
   };
 
+  const handleSavedPost = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}api/savedPosts/`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          post_id: post.id,
+        }),
+      });
+
+      if (!response.ok) {
+        toast.error('Hubo un error al guardar el post');
+      } else {
+        setIsSaved(true);
+        toast.success('Post guardado correctamente!');
+      }
+
+    } catch (error) {
+      console.log(error)
+      toast.error('Hubo un error al guardar el post');
+    }
+  };
+
+  const handleDeleteSavedPost = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}api/savedPosts/${post.id}/`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        toast.error('Hubo un error al eliminar el post guardado');
+      } else {
+        setIsSaved(false);
+        toast.success('Post eliminado correctamente!');
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error('Hubo un error al eliminar el post guardado');
+    }
+  };
 
   const handleConfirm = async () => {
     try {
@@ -56,18 +107,23 @@ export const PostCard = ({ post }) => {
       });
 
       if (response.ok) {
-        alert('Solicitud registrada correctamente');
+        toast.success('Solicitud registrada correctamente!');
         // Aquí puedes actualizar el estado o recargar los datos de la página
         // por ejemplo, actualizando el estado del post, o realizando un fetch nuevamente
         setIsModalOpen(false); // Cerrar el modal
         navigate('/requests');
       } else {
-        alert('Hubo un error al registrar la solicitud');
+        toast.error('Hubo un error al registrar la solicitud');
       }
     } catch (error) {
-      alert('Error en la solicitud', error);
+      console.log(error)
+      toast.error('Hubo un error al registrar la solicitud');
     }
   };
+
+  // Función para formatear la fecha y hora
+  const timeAgo = formatDistanceToNow(new Date(post.datecreated), { addSuffix: true, locale: es });
+
   if (isLoadingProfile) return <div className='container text-center'>Cargando...</div>;
   if (errorsProfile) return <div className='container text-center'>Error al cargar los datos.</div>;
   if (!profileData) return <div className='container text-center'>La Sesión ha expirado, vuelva a iniciar sesión.</div>;
@@ -80,18 +136,29 @@ export const PostCard = ({ post }) => {
         </div>
         <div className="col-md-11">
           <div className="card-body">
-            <h5 className="card-title">{post.user.first_name} {post.user.last_name}</h5>
-            <button
-              className="btn btn-dark fw-bold me-3 mt-4"
-              onClick={handleEditarPerfil}
-            >
-              Ver perfil
-            </button>
+            <div className="d-flex justify-content-between">
+              <button className='btn fw-bold fs-4' onClick={handleEditarPerfil}>{post.user.first_name} {post.user.last_name}</button>
+              { isSaved ? (
+                <button className="btn btn-outline-danger fw-bold" onClick={handleDeleteSavedPost}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-x-circle" viewBox="0 0 16 18">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                  </svg>
+                </button>
+              ) : (
+                <button className="btn btn-outline-dark fw-bold" onClick={handleSavedPost}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-bookmark" viewBox="0 0 17 18">
+                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+                  </svg>
+                </button>
+              )
+            }
+            </div>
             <p className="card-text">{post.description}</p>
             <span className="badge text-bg-dark">{post.service.title}</span>
             <p className="card-text">Disponibilidad: {post.disponibility}</p>
             <p className="card-text">
-              <small className="text-muted">creado el {new Date(post.datecreated).toISOString().slice(0, 19).replace('T', ' ')}</small>
+              <small className="text-muted">Publicado {timeAgo}</small>
             </p>
             {profileData.is_finder && (
             <button
@@ -105,6 +172,7 @@ export const PostCard = ({ post }) => {
           </div>
         </div>
       </div>
+
 
       {/* Modal de confirmación */}
       {isModalOpen && (
