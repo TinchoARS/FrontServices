@@ -9,7 +9,7 @@ export const ServiceCard = ({ service }) => {
   const timeAgo = formatDistanceToNow(new Date(service.created_at), { addSuffix: true, locale: es });
 
   const handleServiceDetails = () => {
-    navigate(`/services/${service.id}`);
+    navigate(`/services/${service.id}/`);
   };
 
   return (

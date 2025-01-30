@@ -94,7 +94,7 @@ export const RequestCard = ({ request, token, isSupplier,profileId }) => {
 
             {request.status === 'accepted' && (
                 <div className="btn-group mt-2"> 
-                <button className="btn btn-secondary m-3" onClick={() => navigate(`/statusservices?request=${request.id}`)}>Ver estado</button> 
+                <button className="btn btn-secondary m-3" onClick={() => navigate(`/statusservices/?request=${request.id}`)}>Ver estado</button> 
             </div>
             )}
 
