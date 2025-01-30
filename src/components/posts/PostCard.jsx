@@ -38,6 +38,7 @@ export const PostCard = ({ post }) => {
         email: post.user.email,
         telephone: post.user.telephone,
         id_oferente: post.user.id, // id del oferente para traer sus ratings
+        image: post.user.image,
       },
     });
   };
@@ -132,7 +133,11 @@ export const PostCard = ({ post }) => {
     <div className="card mb-3" style={anchoCard}>
       <div className="row g-0">
         <div className="col-md-1">
-          <img src='src/assets/userLogo.jpeg' alt="User" className="img-fluid rounded-start p-2" width={'100px'} />
+          { post.user.image ? (
+            <img src={post.user.image} alt="User" className="img-fluid rounded-circle p-2" width={'100px'} />
+          ) : (
+            <img src='/assets/userLogo.jpeg' alt="User" className="img-fluid rounded-circle p-2" width={'100px'} />
+          )}
         </div>
         <div className="col-md-11">
           <div className="card-body">

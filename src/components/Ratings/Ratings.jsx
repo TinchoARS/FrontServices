@@ -11,7 +11,7 @@ export const Ratings = () => {
     const { token } = useAuth('state');
     const [feedbackMessage, setFeedbackMessage] = useState('');
     const location = useLocation();
-    const { firstName, lastName, username, email, telephone, id_oferente, state_oferente,} = location.state || {};
+    const { firstName, lastName, username, email, telephone, id_oferente, state_oferente, image} = location.state || {};
     const [formData, setFormData] = useState({ stars: "", comment: "" , user_id: id_oferente});
 
     // Fetch para obtener las calificaciones del oferente
@@ -76,8 +76,11 @@ export const Ratings = () => {
                     <div className="card mb-3">
                         <div className="row g-0">
                             <div className="col-md-4">
-                                <img src='src/assets/userLogo.jpeg' className="card-img-top p-5" alt="foto de perfil" />
-                                {/* <img src={data.imagen} className="card-img-top" alt="foto de perfil" /> */}
+                                {image ? (
+                                    <img src={image} className="card-img-top rounded-circle p-5" alt="foto de perfil" />
+                                ) : (
+                                    <img src='/assets/userLogo.jpeg' className="card-img-top rounded-circle p-5 " alt="foto de perfil" />
+                                )}
                             </div>
                             <div className="col-md-8">
                                 <div className="card-body mt-3">
