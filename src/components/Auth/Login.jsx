@@ -54,7 +54,7 @@ export const Login = () => {
                         <div className="mb-3">
                             <label htmlFor="username" className="form-label">Usuario</label>
                             <input 
-                                type="user" 
+                                type="text" 
                                 className="form-control" 
                                 id="username" 
                                 name="username" 

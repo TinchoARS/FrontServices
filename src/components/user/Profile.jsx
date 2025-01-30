@@ -78,10 +78,10 @@ export const Profile = () => {
                     <div className="card mb-3">
                         <div className="row g-0">
                             <div className="col-md-4">
-                                { data.image ? (
-                                    <img src={data.image} className="card-img-top rounded-circle p-5" alt="foto de perfil" />
+                                { data.image == null ? (
+                                    <img src='/assets/userLogo.jpeg' className="card-img-top p-5" alt="foto de perfil por defecto" />
                                 ) : (
-                                    <img src='/assets/userLogo.jpeg' className="card-img-top p-5" alt="foto de perfil" />
+                                    <img src={data.image} className="card-img-top rounded-circle p-5" alt="foto de perfil db" />
                                 )}
                             </div>
                             <div className="col-md-8">

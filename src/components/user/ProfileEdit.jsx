@@ -15,7 +15,7 @@ export const ProfileEdit = () => {
         first_name: "",
         last_name: "",
         telephone: "",
-        // imagen: null,
+        image: null,
     });
 
     useEffect(() => {
@@ -29,12 +29,12 @@ export const ProfileEdit = () => {
                 });
                 const data = await response.json();
                 setFormData({
-                    username: data.username,
-                    email: data.email,
-                    first_name: data.first_name,
-                    last_name: data.last_name,
-                    telephone: data.telephone,
-                    // imagen: data.imagen,
+                    username: data.username || "",
+                    email: data.email || "",
+                    first_name: data.first_name || "",
+                    last_name: data.last_name || "",
+                    telephone: data.telephone || "",
+                    image: data.image || null,
                 });
             } catch (error) {
                 console.error("Error fetching user data:", error);
@@ -55,36 +55,50 @@ export const ProfileEdit = () => {
     const handleFileChange = (e) => {
         setFormData({
         ...formData,
-        //   imagen: e.target.files[0], // Solo se permite seleccionar un archivo
+          image: e.target.files[0], // Solo se permite seleccionar un archivo
         });
     };
 
-    const [{ data, isError, isLoading }, doFetch] = useFetch(
-        `${import.meta.env.VITE_BASE_URL}api/profile/`,
-        {
-            method: "PUT",
-            headers: {
-                Authorization: `Token ${token}`,
-            },
-        }
-    );
-
-
-    // funcion para registart usuario y redirigir a la pagina de login
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // Crea un objeto FormData para enviar datos al backend
         const form = new FormData();
         form.append("username", formData.username);
         form.append("email", formData.email);
         form.append("first_name", formData.first_name);
         form.append("last_name", formData.last_name);
         form.append("telephone", formData.telephone);
-        // form.append("imagen", formData.imagen); // Incluye la imagen en el form
+        if (formData.image instanceof File) {
+            form.append("image", formData.image); // Incluye la imagen solo si es un archivo
+        }
 
-        doFetch({ body: form });
-        toast.success("Usuario Actualizado con exito");
-        navigate("/profile");
+        try {
+            const response = await fetch(`${import.meta.env.VITE_BASE_URL}api/profile/`, {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Token ${token}`,
+                },
+                body: form,
+            });
+
+            if (response.ok) {
+                const updatedData = await response.json();
+                setFormData({
+                    username: updatedData.username || "",
+                    email: updatedData.email || "",
+                    first_name: updatedData.first_name || "",
+                    last_name: updatedData.last_name || "",
+                    telephone: updatedData.telephone || "",
+                    image: updatedData.image || null,
+                });
+                toast.success("Perfil actualizado con éxito!");
+                navigate("/profile");
+            } else {
+                toast.error("Error al actualizar datos del perfil.");
+                console.error("Error updating user data:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Error Al actualizar los datos del usuario:", error);
+        }
     };
 
 
@@ -95,7 +109,7 @@ export const ProfileEdit = () => {
 
                 <div className="col-12 col-md-6">
                 <h2 className="text-center mb-5">Editar Perfil</h2>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} encType="multipart/form-data">
                     <div className="mb-3">
                     <label htmlFor="first_name" className="form-label">
                         Nombre
@@ -168,7 +182,7 @@ export const ProfileEdit = () => {
                         required
                     />
                     </div>
-                    {/* <div className="mb-3">
+                    <div className="mb-3">
                     <label htmlFor="imagen" className="form-label">
                         Foto de perfil
                     </label>
@@ -181,7 +195,7 @@ export const ProfileEdit = () => {
                         onChange={handleFileChange}
                         />
                     </div>
-                    </div> */}
+                    </div>
                     <div className="mb-3 text-center">
                         <div className="control">
                             <button type="submit" className="btn btn-primary text-center">
@@ -190,9 +204,6 @@ export const ProfileEdit = () => {
                         </div>
                     </div>
                 </form>
-                </div>
-                <div>
-                    {isError && <div className="text-center">Error al cargar datos del perfil.</div>}
                 </div>
                 <div className="col-md-3"></div>
             </div>
