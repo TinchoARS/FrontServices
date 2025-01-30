@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
+ 
 import { useState } from 'react';
 import useFetch from '../../hooks/fetchHook';
 import { useAuth } from '../../contexts/AuthContext';
