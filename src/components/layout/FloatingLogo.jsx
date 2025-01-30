@@ -1,4 +1,4 @@
-import logo from '../../assets/TECH TITANS.png'
+import logo from '/assets/TECH TITANS.png'
 
 export const FloatingLogo = () => {
   return (

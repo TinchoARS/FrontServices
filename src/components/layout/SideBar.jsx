@@ -1,13 +1,13 @@
 import '../../styles/SideBar.css'
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import home from '../../assets/home.png'
-import services from '../../assets/shop.png'
-import saved from '../../assets/bookmark.png'
-import requests from '../../assets/text-bubble.png'
-import profile from '../../assets/user.png'
-import post from '../../assets/menu.png'
-import logo from '../../assets/logo.png'
+import home from '/assets/home.png'
+import services from '/assets/shop.png'
+import saved from '/assets/bookmark.png'
+import requests from '/assets/text-bubble.png'
+import profile from '/assets/user.png'
+import post from '/assets/menu.png'
+import logo from '/assets/logo.png'
 
 export const SideBar = () => {
     const { logout } = useAuth("actions");

@@ -2,8 +2,8 @@
 import { useState } from "react";
 import useFetch from "../../hooks/fetchHook";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/logo.png";
-import background from "../../assets/background3.png";
+import logo from "/assets/logo.png";
+import background from "/assets/background3.png";
 import { toast } from "react-toastify";
 
 export const Register = () => {
