@@ -17,7 +17,7 @@ export const Register = () => {
         password: "",
         is_supplier: 0,
         is_finder: 0,
-        // imagen: null,
+        image: null,
     });
 
   const handleChange = (e) => {
@@ -40,7 +40,7 @@ export const Register = () => {
   const handleFileChange = (e) => {
     setFormData({
       ...formData,
-    //   imagen: e.target.files[0], // Solo se permite seleccionar un archivo
+      image: e.target.files[0], // Solo se permite seleccionar un archivo
     });
   };
 
@@ -64,7 +64,7 @@ export const Register = () => {
     form.append("is_supplier", formData.is_supplier);
     form.append("is_finder", formData.is_finder);
     form.append("password", formData.password);
-    // form.append("imagen", formData.imagen); // Incluye la imagen en el form
+    form.append("image", formData.image); // Incluye la imagen en el form
 
     doFetch({ body: form });
     console.log(form)
@@ -83,7 +83,7 @@ export const Register = () => {
                         <img src={logo} alt="logo Servify" className="img-fluid" style={{ maxWidth: '150px' }} />
                     </div>
                     <h2 className="text-center mb-4">Registrarse</h2>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} encType="multipart/form-data">
                         <div className="mb-3">
                             <label htmlFor="first_name" className="form-label">Nombre</label>
                             <input
@@ -155,6 +155,20 @@ export const Register = () => {
                                 onChange={handleChange}
                                 required
                             />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="imagen" className="form-label">
+                                Foto de perfil
+                            </label>
+                            <div className="control has-icons-left">
+                                <input
+                                className="form-control"
+                                type="file"
+                                id="imagen"
+                                name="imagen"
+                                onChange={handleFileChange}
+                                />
+                            </div>
                         </div>
                         <div className="mb-4">
                             <label className="form-label d-block">Elige tu rol:</label>

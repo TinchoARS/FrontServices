@@ -78,11 +78,14 @@ export const Profile = () => {
                     <div className="card mb-3">
                         <div className="row g-0">
                             <div className="col-md-4">
-                                <img src='/assets/userLogo.jpeg' className="card-img-top p-5" alt="foto de perfil" />
-                                {/* <img src={data.imagen} className="card-img-top" alt="foto de perfil" /> */}
+                                { data.image ? (
+                                    <img src={data.image} className="card-img-top rounded-circle p-5" alt="foto de perfil" />
+                                ) : (
+                                    <img src='/assets/userLogo.jpeg' className="card-img-top p-5" alt="foto de perfil" />
+                                )}
                             </div>
                             <div className="col-md-8">
-                                <div className="card-body mt-3">
+                                <div className="card-body mt-3 ms-5">
                                     <h2 className='card-title'><strong> {data.first_name} {data.last_name} </strong> </h2>
                                     <p className='card-text mt-4'><strong>Usuario:</strong> {data.username} </p>
                                     <p><strong>Email:</strong> {data.email} </p>
