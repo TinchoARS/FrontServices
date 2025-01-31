@@ -3,12 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useFetch from "../../hooks/fetchHook";
 import { toast } from "react-toastify";
-import { useAuth } from "../../contexts/AuthContext";
 
 
 export const FormServiceAdd = () => {
     const navigate = useNavigate();
-    const { token } = useAuth('state');
     const [formData, setFormData] = useState({
         title: "",
         description: "",
@@ -36,10 +34,6 @@ export const FormServiceAdd = () => {
         `${import.meta.env.VITE_BASE_URL}api/services/`,
         {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Token ${token}`,
-        },
         }
     );
 
