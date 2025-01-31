@@ -1,10 +1,27 @@
 .cardServ {
+    position: relative;
     background-color: #ffffff;
     border-radius: 0.75em;
     cursor: pointer;
     transition: ease 0.2s;
     box-shadow: 1em 1em 1em #5e5e5eb1, -0.75em -0.75em 1em #B5DBFF;
     border: 1.5px solid #f2f3f7;
+}
+
+.delete-cta {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    background-color: transparent;
+    border: none;
+    font-size: 1em;
+    font-weight: bold;
+    color: #ff0000;
+    cursor: pointer;
+}
+
+.delete-cta:hover {
+    color: #ff4d4d;
 }
 
 .card {
