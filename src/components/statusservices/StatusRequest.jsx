@@ -31,7 +31,7 @@ export const StatusRequest = () => {
     return (
         <div>{
             data.map((statusrequest,index) => (
-                <div key={index} className="col-12 col-md-4 mb-4">
+                <div key={index} className="col-12 col-md-4 mb-4"style={{paddingLeft: '20px' }}>
                     <StatusRequestCard statusrequest={statusrequest} profile={profileData} />
                 </div>
             ))
