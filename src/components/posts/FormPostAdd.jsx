@@ -54,16 +54,22 @@ export const FormPostAdd = () => {
         fetchServices();
     }, []);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // Crea un objeto FormData para enviar datos al backend
         const form = new FormData();
         form.append("description", formData.description);
         form.append("disponibility", formData.disponibility);
         form.append("service", parseInt(formData.service_id));
-        doFetch({ body: form });
-        toast.success('Publicación creada con éxito.');
-        navigate("/posts");
+
+        try {
+            await doFetch({ body: form });
+            toast.success('Publicación creada con éxito.');
+
+            // Volver a cargar la lista de publicaciones
+            navigate("/posts"); // Redirigir a la lista de publicaciones
+        } catch (error) {
+            toast.error('Error al crear la publicación.');
+        }
     };
 
     return (
