@@ -24,7 +24,7 @@ export const StatusRequestCard = ({ statusrequest, profile }) => {
 
   useEffect(() => {
     setStatus({ status: statusrequest.status });
-  }, [statusrequest.status]);
+  }, [statusrequest.status,status.status]);
 
   const handleModalClose = () => setShowModal(false);
   const handleModalShow = () => setShowModal(true);
@@ -33,13 +33,14 @@ export const StatusRequestCard = ({ statusrequest, profile }) => {
     setSelectedStatus(newStatus);
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     const form = new FormData();
     form.append("status", selectedStatus);
     form.append("comment", userMessage);
     doFetch({ body: form });
     setFeedbackMessage(data ? '¡El cambio de estado se ha finalizado correctamente!' : 'Hubo un problema al intentar cambiar el estado.');
-    window.location.reload();
+    setStatus({ status: selectedStatus });
+    statusrequest.status = selectedStatus;
     handleModalClose();
   };
 
@@ -62,7 +63,7 @@ export const StatusRequestCard = ({ statusrequest, profile }) => {
       <div className="card-body">
         <li className="list-group-item">
           <span className="badge bg-warning text-bg-dark">Estado: {statusrequest.status}</span>
-          {profile.is_supplier === true && statusrequest.status !== "finalizado" && statusrequest.status !== "cancelado" && (
+          {statusrequest.status !== "finalizado" && statusrequest.status !== "cancelado" && (
             <div className="card-body">
               <button onClick={handleModalShow} className="btn btn-dark fw-bold me-3 mt-4">
                 Cambiar estado
