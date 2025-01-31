@@ -12,7 +12,7 @@ export const ServiceDetails = () => {
     const { idService } = useParams();
     const { token } = useAuth('state');
     const navigate = useNavigate();
-    const [ {data, isLoading, errors}, doFetch ] = useFetch(`http://127.0.0.1:8000/api/services/${idService}`, {
+    const [ {data, isLoading, errors}, doFetch ] = useFetch(`${import.meta.env.VITE_BASE_URL}api/services/${idService}/`, {
         method: 'GET',
         headers: {
             Authorization: `Token ${token}`
