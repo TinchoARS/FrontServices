@@ -56,9 +56,8 @@ VITE_BASE_URL = https://api-hn1b.onrender.com
 - **contexts**: Contiene los contextos de React para la gestión del estado global.
 - **hooks**: Contiene hooks personalizados utilizados en la aplicación.
 
-### **Guía de Uso:**
+- **Ejemplos de uso:** 
 
-- **Ejemplos de uso:**
 
 OFERENTE:
 
@@ -71,6 +70,7 @@ BUSCADOR:
     1. Inicia sesión como buscador.
     2. Ve a "Publicaciones" y contrata el servicio deseado.
     3. Accede a "Mis solicitudes" para revisar el estado de tus servicios contratados.
+
 
 ### **Capturas de pantalla**
 

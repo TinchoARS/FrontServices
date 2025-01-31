@@ -17,7 +17,7 @@ export const Register = () => {
         password: "",
         is_supplier: 0,
         is_finder: 0,
-        // imagen: null,
+        image: null,
     });
 
   const handleChange = (e) => {
@@ -40,21 +40,12 @@ export const Register = () => {
   const handleFileChange = (e) => {
     setFormData({
       ...formData,
-    //   imagen: e.target.files[0], // Solo se permite seleccionar un archivo
+      image: e.target.files[0], // Solo se permite seleccionar un archivo
     });
   };
 
-  const [{ data, isError, isLoading }, doFetch] = useFetch(
-    `${import.meta.env.VITE_BASE_URL}register/`,
-    {
-      method: "POST",
-    }
-  );
-
-  // funcion para registart usuario y redirigir a la pagina de login
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Crea un objeto FormData para enviar datos al backend
     const form = new FormData();
     form.append("username", formData.username);
     form.append("email", formData.email);
@@ -64,13 +55,35 @@ export const Register = () => {
     form.append("is_supplier", formData.is_supplier);
     form.append("is_finder", formData.is_finder);
     form.append("password", formData.password);
-    // form.append("imagen", formData.imagen); // Incluye la imagen en el form
+    if (formData.image instanceof File) {
+        form.append("image", formData.image); // Incluye la imagen solo si es un archivo
+    }
 
-    doFetch({ body: form });
-    console.log(form)
-    if (!isError) {
-        toast.success("Usuario registrado con éxito");
-        navigate("/login");
+    try {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}register/`, {
+            method: 'POST',
+            body: form,
+        });
+
+        if (response.ok) {
+            const updatedData = await response.json();
+            setFormData({
+                username: updatedData.username || "",
+                email: updatedData.email || "",
+                first_name: updatedData.first_name || "",
+                last_name: updatedData.last_name || "",
+                telephone: updatedData.telephone || "",
+                password: updatedData.password || "",
+                image: updatedData.image || null,
+            });
+            toast.success("Cuenta creada con éxito!");
+            navigate("/login");
+        } else {
+            toast.error("Error al crear cuenta :(.");
+            console.error("Error create user data:", response.statusText);
+        }
+    } catch (error) {
+        console.error("Error al crear cuenta:", error);
     }
   };
 
@@ -83,7 +96,7 @@ export const Register = () => {
                         <img src={logo} alt="logo Servify" className="img-fluid" style={{ maxWidth: '150px' }} />
                     </div>
                     <h2 className="text-center mb-4">Registrarse</h2>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} encType="multipart/form-data">
                         <div className="mb-3">
                             <label htmlFor="first_name" className="form-label">Nombre</label>
                             <input
@@ -117,6 +130,7 @@ export const Register = () => {
                                 name="username"
                                 value={formData.username}
                                 onChange={handleChange}
+                                autoComplete="username"
                                 required
                             />
                         </div>
@@ -129,6 +143,7 @@ export const Register = () => {
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
+                                autoComplete="email"
                                 required
                             />
                         </div>
@@ -153,8 +168,23 @@ export const Register = () => {
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
+                                autoComplete="new-password"
                                 required
                             />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="imagen" className="form-label">
+                                Foto de perfil
+                            </label>
+                            <div className="control has-icons-left">
+                                <input
+                                className="form-control"
+                                type="file"
+                                id="imagen"
+                                name="imagen"
+                                onChange={handleFileChange}
+                                />
+                            </div>
                         </div>
                         <div className="mb-4">
                             <label className="form-label d-block">Elige tu rol:</label>
@@ -189,7 +219,6 @@ export const Register = () => {
                             <button type="submit" className="btn btn-primary w-100">
                                 Registrarme
                             </button>
-                            {isError && <p className="text-danger mt-3">Error al cargar los datos.</p>}
                         </div>
                         <hr style={{ backgroundColor: '#dee2e6', opacity: '0.3' }} />
                         <div className="text-center mt-4">
