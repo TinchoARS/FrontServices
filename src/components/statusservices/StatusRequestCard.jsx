@@ -57,12 +57,8 @@ export const StatusRequestCard = ({ statusrequest, profile }) => {
     });
   };
 
-  const anchoCard = {
-    width: "auto",
-  };
-
   return (
-    <div className="card" style={anchoCard}>
+    <div className="card mb-3" style={{ backgroundColor: '#E0E8EE' }}>
       <div className="card-body">
         <li className="list-group-item">
           <span className="badge bg-warning text-bg-dark">Estado: {statusrequest.status}</span>
