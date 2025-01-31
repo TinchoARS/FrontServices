@@ -40,7 +40,7 @@ export const FormServiceAdd = () => {
         }
     );
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const form = new FormData();
         form.append("title", formData.title);
@@ -48,9 +48,16 @@ export const FormServiceAdd = () => {
         form.append("category", formData.category);
         form.append("duration", formData.duration);
         form.append("tags", formData.tags);
-        doFetch({ body: form });
-        toast.success("Servicio creado con éxito");
-        navigate("/services");
+
+        try {
+            await doFetch({ body: form });
+            toast.success("Servicio creado con éxito");
+
+            // Volver a cargar la lista de servicios
+            navigate("/services"); // Redirigir a la lista de servicios
+        } catch (error) {
+            toast.error("Error al crear el servicio.");
+        }
     };
 
     return (
