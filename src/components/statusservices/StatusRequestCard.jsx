@@ -58,7 +58,7 @@ export const StatusRequestCard = ({ statusrequest, profile }) => {
   };
 
   return (
-    <div className="card mb-3" style={{ backgroundColor: '#E0E8EE' }}>
+    <div className="card mb-3" style={{ backgroundColor: '#E0E8EE', paddingLeft: '20px' }}>
       <div className="card-body">
         <li className="list-group-item">
           <span className="badge bg-warning text-bg-dark">Estado: {statusrequest.status}</span>
